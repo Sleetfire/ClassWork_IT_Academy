@@ -1,6 +1,7 @@
 package by.it.academy.mK_JD2_88_2.endpoints.pools_servlets;
 
 import by.it.academy.mK_JD2_88_2.service.PoolService;
+import by.it.academy.mK_JD2_88_2.service.api.IPoolService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,7 @@ public class GenresServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PoolService service = new PoolService();
+        IPoolService service = new PoolService();
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
         writer.write("<h2>Список жанров</h2>");

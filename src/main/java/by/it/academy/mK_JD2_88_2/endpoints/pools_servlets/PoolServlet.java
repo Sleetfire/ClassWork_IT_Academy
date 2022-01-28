@@ -1,6 +1,7 @@
 package by.it.academy.mK_JD2_88_2.endpoints.pools_servlets;
 
 import by.it.academy.mK_JD2_88_2.service.PoolService;
+import by.it.academy.mK_JD2_88_2.service.api.IPoolService;
 import by.it.academy.mK_JD2_88_2.service.api.dto.Pool;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ public class PoolServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
-        PoolService service = new PoolService();
+        IPoolService service = new PoolService();
 
 
         int artistIndex = parseStringToNumber(req.getParameter("artist"));

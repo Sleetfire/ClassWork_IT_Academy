@@ -2,6 +2,7 @@ package by.it.academy.mK_JD2_88_2.endpoints.pools_servlets;
 
 import by.it.academy.mK_JD2_88_2.service.PoolService;
 import by.it.academy.mK_JD2_88_2.service.Storage;
+import by.it.academy.mK_JD2_88_2.service.api.IPoolService;
 import by.it.academy.mK_JD2_88_2.service.api.dto.SavedPool;
 
 import javax.servlet.ServletException;
@@ -22,10 +23,11 @@ public class LastShortTextServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
 
-        PoolService service = new PoolService();
+        IPoolService service = new PoolService();
         service.setPools(Storage.savedPoolList);
         List<SavedPool> sortedPools = service.getSortedPool(Comparator.comparing(SavedPool::getTime));
 
+        writer.write("<h3>Последние краткие ответы: от самого первого до последнего</h3>");
         writer.write("<ol>");
         for (SavedPool pool : sortedPools) {
             writer.write("<li><b>О себе:</b> " + pool.getPool().getAbout() + ". <b>Время голосования:</b> " +

@@ -33,7 +33,7 @@ public class PoolService implements IPoolService {
     }
 
     public List<SavedPool> getPools() {
-        return pools;
+        return this.pools;
     }
 
     public void setPools(List<SavedPool> pools) {
