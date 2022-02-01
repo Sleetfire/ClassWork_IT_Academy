@@ -1,4 +1,4 @@
-package by.it.academy.mK_JD2_88_2.endpoints;
+package by.it.academy.mK_JD2_88_2.endpoints.open_weather_servlets;
 
 import by.it.academy.mK_JD2_88_2.open_weather.OpenWeather;
 
