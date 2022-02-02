@@ -24,7 +24,6 @@ public class StorageServlet extends HttpServlet {
     private static final String COOKIE_KEY = "cookie";
     private static final String SESSION_KEY = "session";
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -40,11 +39,13 @@ public class StorageServlet extends HttpServlet {
         Person person = new Person(firstName, lastName, age);
 
         if (Objects.equals(header, COOKIE_KEY)) {
-            CookieService.getInstance().savePerson(person, resp);
-            writer.write(CookieService.getInstance().getPerson(req).toString());
+            CookieService.getInstance().savePersonInCookie(person, resp);
+            writer.write("<span style = \"color: red\">" + CookieService.getInstance().getPersonFromCookie(req)
+                    .toString() + "</span");
         } else if (Objects.equals(header, SESSION_KEY)) {
-            SessionService.getInstance().savePerson(person, req);
-            writer.write(SessionService.getInstance().getPerson(req).toString());
+            SessionService.getInstance().savePersonInSession(person, req);
+            writer.write("<span style = \"color: blue\">" + SessionService.getInstance().getPersonFromSession(req)
+                    .toString() + "</span");
         }
 
     }

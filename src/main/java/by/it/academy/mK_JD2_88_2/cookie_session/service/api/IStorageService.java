@@ -2,20 +2,41 @@ package by.it.academy.mK_JD2_88_2.cookie_session.service.api;
 
 import by.it.academy.mK_JD2_88_2.cookie_session.dto.Person;
 
-public interface IStorageService<T, E> {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public interface IStorageService {
 
     /**
-     * Сохраняет пользователя в хранилище
+     * Сохраняет пользователя в куки
+     *
      * @param person пользователь
-     * @param storage хранилище (может быть Cookie или Session)
+     * @param resp   ответ сервера
      */
-    void savePerson(Person person, T storage);
+    void savePersonInCookie(Person person, HttpServletResponse resp);
 
     /**
-     * Достаёт пользователя из хранилища
-     * @param storage хранилище (может быть Cookie или Session)
+     * Сохраняет пользователя в сессию
+     *
+     * @param person пользователь
+     * @param req    запрос к серверу
+     */
+    void savePersonInSession(Person person, HttpServletRequest req);
+
+    /**
+     * Возвращает пользователя из куки
+     *
+     * @param req запрос к серверу
      * @return пользователь
      */
-    Person getPerson(E storage);
+    Person getPersonFromCookie(HttpServletRequest req);
+
+    /**
+     * Возвращает пользователя из сессии
+     *
+     * @param req запрос к серверу
+     * @return пользователь
+     */
+    Person getPersonFromSession(HttpServletRequest req);
 
 }

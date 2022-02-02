@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class CookieService implements IStorageService<HttpServletResponse, HttpServletRequest> {
+public class CookieService implements IStorageService {
 
     private static IStorageService instance;
 
@@ -23,30 +23,52 @@ public class CookieService implements IStorageService<HttpServletResponse, HttpS
     }
 
     @Override
-    public void savePerson(Person person, HttpServletResponse storage) {
+    public void savePersonInCookie(Person person, HttpServletResponse resp) {
         String firstName = person.getFirstName();
         String lastName = person.getLastName();
         int age = person.getAge();
-        saveCookie(FIRST_NAME_COOKIE_KEY, firstName, storage);
-        saveCookie(LAST_NAME_COOKIE_KEY, lastName, storage);
-        saveCookie(AGE_COOKIE_KEY, Integer.toString(age), storage);
+        saveCookie(FIRST_NAME_COOKIE_KEY, firstName, resp);
+        saveCookie(LAST_NAME_COOKIE_KEY, lastName, resp);
+        saveCookie(AGE_COOKIE_KEY, Integer.toString(age), resp);
     }
 
     @Override
-    public Person getPerson(HttpServletRequest storage) {
-        String firstName = getValueFromCookie(FIRST_NAME_COOKIE_KEY, storage);
-        String lastName = getValueFromCookie(LAST_NAME_COOKIE_KEY, storage);
-        int age = Integer.parseInt(getValueFromCookie(AGE_COOKIE_KEY, storage));
+    public Person getPersonFromCookie(HttpServletRequest req) {
+        String firstName = getValueFromCookie(FIRST_NAME_COOKIE_KEY, req);
+        String lastName = getValueFromCookie(LAST_NAME_COOKIE_KEY, req);
+        int age = Integer.parseInt(getValueFromCookie(AGE_COOKIE_KEY, req));
         Person person = new Person(firstName, lastName, age);
         return person;
     }
 
+    @Override
+    public void savePersonInSession(Person person, HttpServletRequest req) {
+        throw  new UnsupportedOperationException();
+    }
+
+    @Override
+    public Person getPersonFromSession(HttpServletRequest req) {
+        throw  new UnsupportedOperationException();
+    }
+
+    /**
+     * Сохраняет куки
+     * @param cookieName название куки
+     * @param value значение куки
+     * @param resp ответ сервера
+     */
     private void saveCookie(String cookieName, String value, HttpServletResponse resp) {
         Cookie cookie = new Cookie(cookieName, URLEncoder.encode(value, StandardCharsets.UTF_8));
         cookie.setMaxAge(Math.toIntExact(TimeUnit.DAYS.toSeconds(1)));
         resp.addCookie(cookie);
     }
 
+    /**
+     * Получает значение по имени из куки
+     * @param cookieName имя куки
+     * @param req запрос к серверу
+     * @return значение из куки
+     */
     private String getValueFromCookie(String cookieName, HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {

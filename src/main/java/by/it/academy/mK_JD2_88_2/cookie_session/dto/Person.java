@@ -19,7 +19,7 @@ public class Person {
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -27,7 +27,7 @@ public class Person {
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -35,7 +35,7 @@ public class Person {
     }
 
     public int getAge() {
-        return age;
+        return this.age;
     }
 
     public void setAge(int age) {
@@ -45,18 +45,21 @@ public class Person {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return age == person.age && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
+        return this.age == person.age && Objects.equals(this.firstName, person.firstName) && Objects.equals(this.lastName, person.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, age);
+        int result = 31 * this.firstName.hashCode();
+        result += 31 * this.lastName.hashCode();
+        result += 31 * this.age;
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Пользователь имени: " + this.firstName + ". С фамилией: " + this.lastName + ". Возрастом: " + this.age;
+        return "Имя: " + this.firstName + ". Фамилия: " + this.lastName + ". Возраст: " + this.age;
     }
 }
