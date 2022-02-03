@@ -3,6 +3,7 @@ package by.it.academy.mK_JD2_88_2.cookie_session.servlets;
 import by.it.academy.mK_JD2_88_2.cookie_session.dto.Person;
 import by.it.academy.mK_JD2_88_2.cookie_session.service.CookieService;
 import by.it.academy.mK_JD2_88_2.cookie_session.service.SessionService;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,7 +33,9 @@ public class StorageServlet extends HttpServlet {
 
         String firstName = req.getParameter(FIRST_NAME_PARAM_KEY);
         String lastName = req.getParameter(LAST_NAME_PARAM_KEY);
-        int age = Integer.parseInt(req.getParameter(AGE_PARAM_KEY));
+        String stringAge = req.getParameter(AGE_PARAM_KEY);
+
+        int age = NumberUtils.isDigits(stringAge) ? Integer.parseInt(stringAge) : 0;
 
         String header = req.getHeader(HEADER_KEY);
 
@@ -46,6 +49,9 @@ public class StorageServlet extends HttpServlet {
             SessionService.getInstance().savePersonInSession(person, req);
             writer.write("<span style = \"color: blue\">" + SessionService.getInstance().getPersonFromSession(req)
                     .toString() + "</span");
+        } else {
+            writer.write("Не указано хранилище!<br>");
+            writer.write("<span style = \"color: green\">" + person + "</span");
         }
 
     }
