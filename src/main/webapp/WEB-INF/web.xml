@@ -3,4 +3,14 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
           http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <display-name>M-JD2-XXX-XX</display-name>
+
+    <listener>
+        <listener-class>by.it.academy.MK_JD2_88_2.polls.listeners.RunCompletionListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>by.it.academy.MK_JD2_88_2.session_counter.listeners.CreateDestroySessionListener</listener-class>
+    </listener>
+
+
 </web-app>
