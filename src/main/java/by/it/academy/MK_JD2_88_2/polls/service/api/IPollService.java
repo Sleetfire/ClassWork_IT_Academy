@@ -27,25 +27,29 @@ public interface IPollService {
      */
     void createPoll(Poll pool);
 
+    /**
+     * Возвращает топ артистов
+     * @param comparator на его основе происходит сортировка
+     * @return отсортированный топ артистов
+     */
     List<ChoiceWithCounter<String>> getArtistTop(Comparator<ChoiceWithCounter>... comparator);
 
+    /**
+     * Возвращает топ жанров
+     * @param comparator на его основе происходит сортировка
+     * @return отсортированный топ жанров
+     */
     List<ChoiceWithCounter<String>> getGenreTop(Comparator<ChoiceWithCounter>... comparator);
 
+    /**
+     * Возвращает список голосов
+     * @return список голосов
+     */
     List<SavedPoll> getPolls();
 
-    void setPolls(List<SavedPoll> polls);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * Сохраняет голоса в список
+     * @param poll голос
+     */
+    void writeSavedPoll(SavedPoll poll);
 }

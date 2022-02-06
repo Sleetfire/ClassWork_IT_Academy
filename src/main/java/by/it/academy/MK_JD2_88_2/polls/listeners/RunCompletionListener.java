@@ -14,7 +14,7 @@ import java.util.List;
 @WebListener
 public class RunCompletionListener implements ServletContextListener {
 
-    private final IFileHandlerService handlerService;
+    private final IFileHandlerService<List<SavedPoll>> handlerService;
     private final IPollService pollService = PollService.getInstance();
     private static final String FILE_NAME = "polls.txt";
 
@@ -26,9 +26,7 @@ public class RunCompletionListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         List<SavedPoll> polls = this.handlerService.readFromFile(FILE_NAME);
         if (polls != null) {
-            for (SavedPoll poll : polls) {
-                this.pollService.createPoll(poll.getPool());
-            }
+            polls.forEach(this.pollService::writeSavedPoll);
         }
     }
 

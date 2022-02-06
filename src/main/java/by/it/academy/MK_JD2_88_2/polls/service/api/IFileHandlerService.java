@@ -1,14 +1,19 @@
 package by.it.academy.MK_JD2_88_2.polls.service.api;
 
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.SavedPoll;
+public interface IFileHandlerService<T> {
 
-import java.util.List;
+    /**
+     * Считывает информацию из файла
+     * @param fileName название файла
+     * @return информацию из файла
+     */
+    T readFromFile(String fileName);
 
-public interface IFileHandlerService {
-
-    List<SavedPoll> readFromFile(String fileName);
-
-    void writeInFile(String fileName, List<SavedPoll> info);
-
+    /**
+     * Записывает информацию в файл
+     * @param fileName название файла
+     * @param info информация
+     */
+    void writeInFile(String fileName, T info);
 
 }

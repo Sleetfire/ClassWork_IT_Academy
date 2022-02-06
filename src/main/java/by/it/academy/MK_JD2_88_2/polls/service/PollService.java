@@ -68,7 +68,7 @@ public class PollService implements IPollService {
         Comparator<Map.Entry<String, Integer>> topArtistComparator = (Comparator.comparingInt(Map.Entry::getValue));
 
         List<Map.Entry<String, Integer>> entries = topArtists.entrySet().stream()
-                .sorted(topArtistComparator)
+                .sorted(topArtistComparator.reversed())
                 .collect(Collectors.toList());
 
         List<ChoiceWithCounter<String>> result = new ArrayList<>();
@@ -97,7 +97,7 @@ public class PollService implements IPollService {
         Comparator<Map.Entry<String, Integer>> topGenreComparator = Comparator.comparingInt(Map.Entry::getValue);
 
         List<Map.Entry<String, Integer>> entries = topGenres.entrySet().stream()
-                .sorted(topGenreComparator)
+                .sorted(topGenreComparator.reversed())
                 .collect(Collectors.toList());
 
         List<ChoiceWithCounter<String>> result = new ArrayList<>();
@@ -115,8 +115,9 @@ public class PollService implements IPollService {
     }
 
     @Override
-    public void setPolls(List<SavedPoll> polls) {
-        this.polls = polls;
+    public void writeSavedPoll(SavedPoll poll) {
+        this.polls.add(poll);
+        this.polls.sort(SavedPoll::compareTo);
     }
 
     public static PollService getInstance() {

@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHandlerService implements IFileHandlerService {
+public class FileHandlerService implements IFileHandlerService<List<SavedPoll>> {
 
     private static IFileHandlerService instance = new FileHandlerService();
 

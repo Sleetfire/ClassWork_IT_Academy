@@ -13,7 +13,7 @@ import java.util.List;
 public class ListenerMain {
     public static void main(String[] args) {
 
-        IFileHandlerService service = FileHandlerService.getInstance();
+        IFileHandlerService<List<SavedPoll>> service = FileHandlerService.getInstance();
         List<SavedPoll> savedPolls = new ArrayList<>();
         savedPolls.add(new SavedPoll(LocalDateTime.now(), new Poll(1, new int[]{1, 2, 3}, "hello")));
         service.writeInFile("polls.txt", savedPolls);
