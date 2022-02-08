@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.open_weather.open_weather_servlets;
+package by.it.academy.MK_JD2_88_2.open_weather.controllers.web.servlets;
 
 import by.it.academy.MK_JD2_88_2.open_weather.OpenWeather;
 

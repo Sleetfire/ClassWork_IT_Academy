@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.session_counter.endpoints;
+package by.it.academy.MK_JD2_88_2.session_counter.controllers.web.servlets;
 
 import by.it.academy.MK_JD2_88_2.session_counter.service.SessionCounter;
 import by.it.academy.MK_JD2_88_2.session_counter.service.api.ISessionCounter;

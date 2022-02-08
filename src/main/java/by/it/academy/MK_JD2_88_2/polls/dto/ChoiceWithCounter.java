@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.polls.service.api.dto;
+package by.it.academy.MK_JD2_88_2.polls.dto;
 
 import java.util.Objects;
 

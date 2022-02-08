@@ -1,7 +1,7 @@
 package by.it.academy.MK_JD2_88_2.polls.service;
 
 import by.it.academy.MK_JD2_88_2.polls.service.api.IFileHandlerService;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.SavedPoll;
+import by.it.academy.MK_JD2_88_2.polls.dto.SavedPoll;
 
 import java.io.*;
 import java.util.ArrayList;

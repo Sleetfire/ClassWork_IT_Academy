@@ -1,8 +1,8 @@
 package by.it.academy.MK_JD2_88_2.polls.service.api;
 
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.ChoiceWithCounter;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.Poll;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.SavedPoll;
+import by.it.academy.MK_JD2_88_2.polls.dto.ChoiceWithCounter;
+import by.it.academy.MK_JD2_88_2.polls.dto.Poll;
+import by.it.academy.MK_JD2_88_2.polls.dto.SavedPoll;
 
 import java.util.Comparator;
 import java.util.List;

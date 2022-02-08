@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.cookie_session.servlets;
+package by.it.academy.MK_JD2_88_2.cookie_session.controllers.web.servlets;
 
 import by.it.academy.MK_JD2_88_2.cookie_session.dto.Person;
 import by.it.academy.MK_JD2_88_2.cookie_session.service.CookieService;

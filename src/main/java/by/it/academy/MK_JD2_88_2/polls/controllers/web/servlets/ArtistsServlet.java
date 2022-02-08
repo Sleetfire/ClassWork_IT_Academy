@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.polls.endpoints.polls_servlets;
+package by.it.academy.MK_JD2_88_2.polls.controllers.web.servlets;
 
 import by.it.academy.MK_JD2_88_2.polls.service.PollService;
 import by.it.academy.MK_JD2_88_2.polls.service.api.IPollService;

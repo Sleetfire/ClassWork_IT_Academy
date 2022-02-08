@@ -1,10 +1,10 @@
-package by.it.academy.MK_JD2_88_2.polls.listeners;
+package by.it.academy.MK_JD2_88_2.polls.controllers.web.listeners;
 
 import by.it.academy.MK_JD2_88_2.polls.service.FileHandlerService;
 import by.it.academy.MK_JD2_88_2.polls.service.PollService;
 import by.it.academy.MK_JD2_88_2.polls.service.api.IFileHandlerService;
 import by.it.academy.MK_JD2_88_2.polls.service.api.IPollService;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.SavedPoll;
+import by.it.academy.MK_JD2_88_2.polls.dto.SavedPoll;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

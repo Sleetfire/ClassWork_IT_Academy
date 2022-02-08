@@ -1,9 +1,9 @@
-package by.it.academy.MK_JD2_88_2.polls.endpoints;
+package by.it.academy.MK_JD2_88_2.polls.controllers.mains;
 
 import by.it.academy.MK_JD2_88_2.polls.service.FileHandlerService;
 import by.it.academy.MK_JD2_88_2.polls.service.api.IFileHandlerService;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.Poll;
-import by.it.academy.MK_JD2_88_2.polls.service.api.dto.SavedPoll;
+import by.it.academy.MK_JD2_88_2.polls.dto.Poll;
+import by.it.academy.MK_JD2_88_2.polls.dto.SavedPoll;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
