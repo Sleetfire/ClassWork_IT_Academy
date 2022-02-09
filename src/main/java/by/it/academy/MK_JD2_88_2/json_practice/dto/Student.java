@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.json_practice.json_task1.dto;
+package by.it.academy.MK_JD2_88_2.json_practice.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 

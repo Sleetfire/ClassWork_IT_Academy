@@ -1,8 +1,8 @@
-package by.it.academy.MK_JD2_88_2.json_practice.json_task1.controllers.web.servlets;
+package by.it.academy.MK_JD2_88_2.json_practice.controllers.web.servlets;
 
-import by.it.academy.MK_JD2_88_2.json_practice.json_task1.dto.Student;
-import by.it.academy.MK_JD2_88_2.json_practice.json_task1.service.StudentService;
-import by.it.academy.MK_JD2_88_2.json_practice.json_task1.service.api.IStudentService;
+import by.it.academy.MK_JD2_88_2.json_practice.dto.Student;
+import by.it.academy.MK_JD2_88_2.json_practice.service.StudentService;
+import by.it.academy.MK_JD2_88_2.json_practice.service.api.IJsonObjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -17,8 +17,8 @@ import java.util.List;
 @WebServlet(name = "StudentServlet", urlPatterns = "/students")
 public class StudentServlet extends HttpServlet {
 
-    private IStudentService service;
-    private ObjectMapper mapper;
+    private final IJsonObjectService<Student> service;
+    private final ObjectMapper mapper;
 
     public StudentServlet() {
         this.service = StudentService.getInstance();
@@ -30,7 +30,7 @@ public class StudentServlet extends HttpServlet {
         resp.setContentType("application/json; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
 
-        List<Student> studentsList = this.service.getStudentsList();
+        List<Student> studentsList = this.service.getJsonObjectsList();
 
         this.mapper.writeValue(writer, studentsList);
     }
@@ -41,7 +41,7 @@ public class StudentServlet extends HttpServlet {
 
         Student student = this.mapper.readValue(req.getInputStream(), Student.class);
 
-        this.service.addStudentToList(student);
+        this.service.addJsonObjectToList(student);
 
     }
 }
