@@ -2,6 +2,7 @@ package by.it.academy.MK_JD2_88_2.json_practice.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
@@ -13,16 +14,21 @@ import java.util.Objects;
  * 	3. Дата выдачи (LocalDate)
  * 	4. ИД паспорта
  */
-@JsonAutoDetect
+@JsonAutoDetect()
 public class Passport {
+    @JsonProperty("id")
     private String id;
+    @JsonProperty("id_citizen")
     private String idCitizen;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("create_date")
+    @JsonFormat(shape=JsonFormat.Shape.NUMBER_INT)
     private LocalDate createDate;
 
     @JsonCreator
-    public Passport(@JsonProperty("id")String id, @JsonProperty("idCitizen") String idCitizen,
-                    @JsonProperty("address") String address, @JsonProperty("createDate") LocalDate createDate) {
+    public Passport(@JsonProperty("id")String id, @JsonProperty("id_citizen") String idCitizen,
+                    @JsonProperty("address") String address, @JsonProperty("create_date") LocalDate createDate) {
         this.id = id;
         this.idCitizen = idCitizen;
         this.address = address;

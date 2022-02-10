@@ -2,9 +2,9 @@ package by.it.academy.MK_JD2_88_2.json_practice.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -17,11 +17,14 @@ import java.util.Objects;
  */
 @JsonAutoDetect
 public class Citizen {
+    @JsonProperty("id")
     private String id;
+    @JsonProperty("passport")
     private Passport passport;
+    @JsonProperty("name")
     private String name;
-
-    //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd.mm.yyyy")
+    @JsonProperty("birthday")
+    //@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd.MM.yyyy")
     private LocalDate birthday;
 
     public String getId() {
@@ -61,10 +64,10 @@ public class Citizen {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Citizen citizen = (Citizen) o;
-        
+
         return Objects.equals(id, citizen.id) && Objects.equals(passport, citizen.passport);
     }
-    
+
     public boolean isPassportOwner(Passport passport){
         return id.equals(passport.getIdCitizen());
     }

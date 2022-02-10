@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "StudentServlet", urlPatterns = "/students")
 public class StudentServlet extends HttpServlet {
@@ -32,7 +34,11 @@ public class StudentServlet extends HttpServlet {
 
         List<Student> studentsList = this.service.getJsonObjectsList();
 
-        this.mapper.writeValue(writer, studentsList);
+        Map<String, List<Student>> students = new HashMap<>();
+        students.put("data", studentsList);
+
+        //this.mapper.writeValue(writer, studentsList);
+        this.mapper.writeValue(writer, students);
     }
 
     @Override
