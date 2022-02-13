@@ -6,9 +6,9 @@ import java.util.Objects;
 public class User {
 
     private String login;
+    private String password;
     private String name;
     private LocalDate birthday;
-    private String password;
 
     public String getLogin() {
         return login;
@@ -16,6 +16,14 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -32,14 +40,6 @@ public class User {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

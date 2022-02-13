@@ -3,9 +3,7 @@ package by.it.academy.MK_JD2_88_2.hw1.service;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IUserService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class UserService implements IUserService {
 
@@ -23,6 +21,14 @@ public class UserService implements IUserService {
     @Override
     public List<User> getUsers() {
         return Collections.unmodifiableList(this.userList);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        Optional<User> optionalUser = this.userList.stream()
+                .filter(user -> Objects.equals(user.getLogin(), login))
+                .findFirst();
+        return optionalUser.orElse(null);
     }
 
     public static IUserService getInstance() {

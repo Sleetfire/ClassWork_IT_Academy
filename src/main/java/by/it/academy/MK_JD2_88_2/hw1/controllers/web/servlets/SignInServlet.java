@@ -9,21 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Objects;
 
-@WebServlet(name = "SignUpServlet", urlPatterns = "/signUp")
-public class SignUpServlet extends HttpServlet {
+@WebServlet(name = "SignInServlet", urlPatterns = "/signIn")
+public class SignInServlet extends HttpServlet {
 
     private final IUserService service;
 
-    public SignUpServlet() {
+    public SignInServlet() {
         this.service = UserService.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/signUp.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
     }
 
     @Override
@@ -32,18 +33,22 @@ public class SignUpServlet extends HttpServlet {
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        String name = req.getParameter("name");
-        LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
 
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setName(name);
-        user.setBirthday(birthday);
-
-        this.service.createUser(user);
-
-        req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
+        User user = this.service.getUserByLogin(login);
+        if (user != null) {
+            String userPassword = user.getPassword();
+            if (Objects.equals(userPassword, password)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("user", user);
+                req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("wrongPassword", true);
+                req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
+            }
+        } else {
+            req.setAttribute("wrongLogin", true);
+            req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
+        }
 
     }
 }

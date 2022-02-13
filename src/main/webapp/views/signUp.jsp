@@ -8,17 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>SignUp page</title>
+    <title>SignUp</title>
 </head>
 <body>
 
 <h3>Регистрация нового пользователя:</h3>
 <form action="/MK_JD2-88-2-0.0.0/signUp" method="post">
-    <b>Логин</b> <input type="text" placeholder="Логин пользователя" name="login"> <br>
-    <b>ФИО</b> <input type="text" placeholder="ФИО пользователя" name="name"> <br>
-    <b>Дата рождения</b> <input type="date", placeholder="Дата рождения" name="birthday"> <br>
-    <b>Пароль</b> <input type="password" placeholder="Пароль" name="password"> <br>
-    <input type="submit" value="Зарегистрироваться">
+    <p><b>Логин</b> <input type="text" placeholder="Логин пользователя" name="login"></p>
+    <p><b>Пароль</b> <input type="password" placeholder="Пароль" name="password"></p>
+    <p><b>ФИО</b> <input type="text" placeholder="ФИО пользователя" name="name"></p>
+    <p><b>Дата рождения</b> <input type="date", placeholder="Дата рождения" name="birthday"></p>
+    <p><input type="submit" value="Зарегистрироваться"></p>
 </form>
 
 </body>

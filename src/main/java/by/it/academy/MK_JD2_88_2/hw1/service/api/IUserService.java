@@ -10,4 +10,6 @@ public interface IUserService {
 
     List<User> getUsers();
 
+    User getUserByLogin(String login);
+
 }
