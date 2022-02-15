@@ -7,7 +7,7 @@ import java.util.*;
 
 public class UserService implements IUserService {
 
-    private final List<User> userList = new ArrayList<>();
+    private final Map<String, User> userMap = new HashMap<>();
     private static final IUserService instance = new UserService();
 
     private UserService() {
@@ -15,20 +15,18 @@ public class UserService implements IUserService {
 
     @Override
     public void createUser(User user) {
-        this.userList.add(user);
+        String login = user.getLogin();
+        this.userMap.put(login, user);
     }
 
     @Override
     public List<User> getUsers() {
-        return Collections.unmodifiableList(this.userList);
+        return List.copyOf(this.userMap.values());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        Optional<User> optionalUser = this.userList.stream()
-                .filter(user -> Objects.equals(user.getLogin(), login))
-                .findFirst();
-        return optionalUser.orElse(null);
+        return this.userMap.get(login);
     }
 
     public static IUserService getInstance() {

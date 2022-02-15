@@ -3,42 +3,42 @@ package by.it.academy.MK_JD2_88_2.hw1.service;
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IMessageService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MessageService implements IMessageService {
 
     private static final IMessageService instance = new MessageService();
-    private final List<Message> messages = new ArrayList<>();
+    private final Map<String, List<Message>> messagesMap = new HashMap<>();
 
     private MessageService() {
     }
 
     @Override
     public void createMessage(Message message) {
-        this.messages.add(message);
+        String login = message.getRecipientLogin();
+        List<Message> messages = this.messagesMap.getOrDefault(login, new ArrayList<>());
+        messages.add(message);
+        this.messagesMap.put(login, messages);
     }
 
     @Override
     public List<Message> getAllMessages() {
-        return Collections.unmodifiableList(this.messages);
+        List<Message> messages = new ArrayList<>();
+        this.messagesMap.values().forEach(messages::addAll);
+        return Collections.unmodifiableList(messages);
     }
 
     @Override
     public List<Message> getMessagesBySenderLogin(String login) {
-        return this.messages.stream()
+        return getAllMessages().stream()
                 .filter(message -> Objects.equals(message.getSenderLogin(), login))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Message> getMessagesByRecipientLogin(String login) {
-        return this.messages.stream()
-                .filter(message -> Objects.equals(message.getRecipientLogin(), login))
-                .collect(Collectors.toList());
+        return this.messagesMap.get(login);
     }
 
     public static IMessageService getInstance() {
