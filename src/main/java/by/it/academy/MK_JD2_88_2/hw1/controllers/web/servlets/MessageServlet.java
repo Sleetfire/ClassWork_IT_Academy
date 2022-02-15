@@ -45,11 +45,7 @@ public class MessageServlet extends HttpServlet {
         User recipientUser = userService.getUserByLogin(recipientLogin);
 
         if (recipientUser != null) {
-            Message message = new Message();
-            message.setSenderLogin(senderLogin);
-            message.setRecipientLogin(recipientLogin);
-            message.setText(text);
-            message.setDateTime(LocalDateTime.now());
+            Message message = new Message(senderLogin, recipientLogin, text, LocalDateTime.now());
             this.service.createMessage(message);
         } else {
             req.setAttribute("wrongRecipientLogin", true);

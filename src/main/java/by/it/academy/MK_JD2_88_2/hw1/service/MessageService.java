@@ -41,6 +41,11 @@ public class MessageService implements IMessageService {
         return this.messagesMap.get(login);
     }
 
+    @Override
+    public int getMessagesCount() {
+        return getAllMessages().size();
+    }
+
     public static IMessageService getInstance() {
         return instance;
     }

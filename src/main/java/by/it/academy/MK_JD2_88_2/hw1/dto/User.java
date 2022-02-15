@@ -10,6 +10,13 @@ public class User {
     private String name;
     private LocalDate birthday;
 
+    public User(String login, String password, String name, LocalDate birthday) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.birthday = birthday;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -47,7 +54,8 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday) && Objects.equals(password, user.password);
+        return Objects.equals(this.login, user.login) && Objects.equals(this.name, user.name)
+                && Objects.equals(this.birthday, user.birthday) && Objects.equals(this.password, user.password);
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface IUserService {
 
     User getUserByLogin(String login);
 
+    int getUserCount();
+
 }

@@ -10,6 +10,13 @@ public class Message {
     private String text;
     private LocalDateTime dateTime;
 
+    public Message(String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
+        this.senderLogin = senderLogin;
+        this.recipientLogin = recipientLogin;
+        this.text = text;
+        this.dateTime = dateTime;
+    }
+
     public String getSenderLogin() {
         return senderLogin;
     }
@@ -47,7 +54,9 @@ public class Message {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
-        return Objects.equals(senderLogin, message.senderLogin) && Objects.equals(recipientLogin, message.recipientLogin) && Objects.equals(text, message.text) && Objects.equals(dateTime, message.dateTime);
+        return Objects.equals(senderLogin, message.senderLogin)
+                && Objects.equals(recipientLogin, message.recipientLogin) && Objects.equals(text, message.text)
+                && Objects.equals(dateTime, message.dateTime);
     }
 
     @Override

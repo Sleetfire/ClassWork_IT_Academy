@@ -20,6 +20,10 @@
     <p style="color: red">Пользователь с таким логином уже существует!</p>
 </c:if>
 
+<c:if test="${emptyFormField == true}">
+    <p style="color: red">Заполните все поля формы регистрации!</p>
+</c:if>
+
 <form action="/MK_JD2-88-2-0.0.0/signUp" method="post">
     <p><b>Логин</b> <input type="text" placeholder="Логин пользователя" name="login"></p>
     <p><b>Пароль</b> <input type="password" placeholder="Пароль" name="password"></p>

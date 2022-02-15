@@ -29,6 +29,11 @@ public class UserService implements IUserService {
         return this.userMap.get(login);
     }
 
+    @Override
+    public int getUserCount() {
+        return getUsers().size();
+    }
+
     public static IUserService getInstance() {
         return instance;
     }

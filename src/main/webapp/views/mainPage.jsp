@@ -14,13 +14,14 @@
 </head>
 <body>
 
-<h3>Вы можете:</h3>
 <c:if test="${user == null}">
+    <h4 style="color: blue">Привет, кем бы ты ни был...</h4>
     <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/signUp'" value="Зарегистрироваться"></p>
     <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/signIn'" value="Войти"></p>
 </c:if>
 
 <c:if test="${user != null}">
+    <h4 style="color: green">Привет, <c:out value="${user.login}"/>!</h4>
     <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/message'" value="Написать сообщение"></p>
     <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/chats'" value="Посмотреть сообщения"></p>
     <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/leave'" value="Выйти"></p>

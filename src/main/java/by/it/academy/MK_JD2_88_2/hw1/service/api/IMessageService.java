@@ -14,4 +14,6 @@ public interface IMessageService {
 
     List<Message> getMessagesByRecipientLogin(String login);
 
+    int getMessagesCount();
+
 }

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class SignUpServlet extends HttpServlet {
 
     private final IUserService service;
+    private final String signUpPageUrl = "/views/signUp.jsp";
 
     public SignUpServlet() {
         this.service = UserService.getInstance();
@@ -23,7 +24,7 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/signUp.jsp").forward(req, resp);
+        req.getRequestDispatcher(this.signUpPageUrl).forward(req, resp);
     }
 
     @Override
@@ -33,17 +34,18 @@ public class SignUpServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
-        LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
+        String strBirthday = req.getParameter("birthday");
 
+        if (login.isEmpty() || password.isEmpty() || name.isEmpty() || strBirthday.isEmpty()) {
+            req.setAttribute("emptyFormField", true);
+            req.getRequestDispatcher(this.signUpPageUrl).forward(req, resp);
+        }
         if (isUserCreated(login)) {
             req.setAttribute("userCreated", true);
-            req.getRequestDispatcher("/views/signUp.jsp").forward(req, resp);
+            req.getRequestDispatcher(this.signUpPageUrl).forward(req, resp);
         } else {
-            User user = new User();
-            user.setLogin(login);
-            user.setPassword(password);
-            user.setName(name);
-            user.setBirthday(birthday);
+            LocalDate birthday = LocalDate.parse(strBirthday);
+            User user = new User(login, password, name, birthday);
             this.service.createUser(user);
             req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
         }
