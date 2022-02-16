@@ -21,6 +21,7 @@ public class MessageServlet extends HttpServlet {
 
     private final IMessageService service;
     private final IUserService userService;
+    private final String messageFilePath = "/views/message.jsp";
 
     public MessageServlet() {
         this.service = MessageService.getInstance();
@@ -29,7 +30,7 @@ public class MessageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/message.jsp").forward(req, resp);
+        req.getRequestDispatcher(this.messageFilePath).forward(req, resp);
     }
 
     @Override
@@ -50,6 +51,6 @@ public class MessageServlet extends HttpServlet {
         } else {
             req.setAttribute("wrongRecipientLogin", true);
         }
-        req.getRequestDispatcher("/views/message.jsp").forward(req, resp);
+        req.getRequestDispatcher(this.messageFilePath).forward(req, resp);
     }
 }

@@ -13,34 +13,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
-@WebServlet(name = "UserListServlet", urlPatterns = "/users")
-public class UserListServlet extends HttpServlet {
+@WebServlet(name = "DeleteUserServlet", urlPatterns = "/profile/delete")
+public class DeleteUserServlet extends HttpServlet {
 
-    private final IUserService service;
+    private final IUserService userService;
     private final IMessageService messageService;
 
-    public UserListServlet() {
-        this.service = UserService.getInstance();
+    public DeleteUserServlet() {
+        this.userService = UserService.getInstance();
         this.messageService = MessageService.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter writer = resp.getWriter();
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+        String login = user.getLogin();
 
-        List<User> userList = this.service.getUsers();
-        for (User user : userList) {
-            writer.write(user.toString() + "<br>");
-        }
-
-        if (this.messageService != null) {
-            writer.write(messageService.getAllMessages().toString());
-        } else {
-            writer.write("Равны нулю!");
-        }
+        this.userService.deleteUserByLogin(login);
+        this.messageService.deleteMessagesByUserLogin(login);
+        session.removeAttribute("user");
+        resp.sendRedirect("/MK_JD2-88-2-0.0.0/leave");
     }
 }

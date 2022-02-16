@@ -17,6 +17,7 @@ import java.util.Objects;
 public class SignInServlet extends HttpServlet {
 
     private final IUserService service;
+    private final String signInFilePath = "/views/signIn.jsp";
 
     public SignInServlet() {
         this.service = UserService.getInstance();
@@ -24,7 +25,7 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
+        req.getRequestDispatcher(this.signInFilePath).forward(req, resp);
     }
 
     @Override
@@ -43,11 +44,11 @@ public class SignInServlet extends HttpServlet {
                 req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
             } else {
                 req.setAttribute("wrongPassword", true);
-                req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
+                req.getRequestDispatcher(this.signInFilePath).forward(req, resp);
             }
         } else {
             req.setAttribute("wrongLogin", true);
-            req.getRequestDispatcher("/views/signIn.jsp").forward(req, resp);
+            req.getRequestDispatcher(this.signInFilePath).forward(req, resp);
         }
 
     }
