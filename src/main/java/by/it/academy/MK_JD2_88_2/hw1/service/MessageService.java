@@ -46,6 +46,11 @@ public class MessageService implements IMessageService {
         return getAllMessages().size();
     }
 
+    @Override
+    public void deleteMessagesByUserLogin(String login) {
+        this.messagesMap.remove(login);
+    }
+
     public static IMessageService getInstance() {
         return instance;
     }

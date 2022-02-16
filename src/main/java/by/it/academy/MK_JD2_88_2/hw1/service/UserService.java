@@ -34,6 +34,11 @@ public class UserService implements IUserService {
         return getUsers().size();
     }
 
+    @Override
+    public void deleteUserByLogin(String login) {
+        this.userMap.remove(login);
+    }
+
     public static IUserService getInstance() {
         return instance;
     }

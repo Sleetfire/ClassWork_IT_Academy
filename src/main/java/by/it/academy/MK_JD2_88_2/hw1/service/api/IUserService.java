@@ -14,4 +14,6 @@ public interface IUserService {
 
     int getUserCount();
 
+    void deleteUserByLogin(String login);
+
 }

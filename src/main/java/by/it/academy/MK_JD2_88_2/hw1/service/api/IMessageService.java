@@ -16,4 +16,6 @@ public interface IMessageService {
 
     int getMessagesCount();
 
+    void deleteMessagesByUserLogin(String login);
+
 }

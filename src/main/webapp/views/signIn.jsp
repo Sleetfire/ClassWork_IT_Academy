@@ -27,6 +27,7 @@
     <p><b>Логин</b> <input type="text" placeholder="Логин пользователя" name="login"></p>
     <p><b>Пароль</b> <input type="password" placeholder="Пароль" name="password"></p>
     <p><input type="submit" value="Войти"></p>
+    <p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/main'" value="На главную"></p>
 </form>
 
 </body>
