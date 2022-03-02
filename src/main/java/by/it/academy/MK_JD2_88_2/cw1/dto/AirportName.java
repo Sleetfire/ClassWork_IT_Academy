@@ -1,8 +1,12 @@
 package by.it.academy.MK_JD2_88_2.cw1.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AirportName {
 
+    @JsonProperty("en")
     private String en;
+    @JsonProperty("ru")
     private String ru;
 
     public String getEn() {
@@ -21,11 +25,4 @@ public class AirportName {
         this.ru = ru;
     }
 
-    @Override
-    public String toString() {
-        return "AirportName{" +
-                "en='" + en + '\'' +
-                ", ru='" + ru + '\'' +
-                '}';
-    }
 }

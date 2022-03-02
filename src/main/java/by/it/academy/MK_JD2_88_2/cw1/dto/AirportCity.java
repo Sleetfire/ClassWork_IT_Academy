@@ -1,8 +1,12 @@
 package by.it.academy.MK_JD2_88_2.cw1.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AirportCity {
 
+    @JsonProperty("en")
     private String en;
+    @JsonProperty("ru")
     private String ru;
 
     public String getEn() {

@@ -2,30 +2,23 @@ package by.it.academy.MK_JD2_88_2.cw1.dto;
 
 public class Coordinates {
 
-    private double x;
-    private double y;
+    private String x;
+    private String y;
 
-    public double getX() {
+    public String getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(String x) {
         this.x = x;
     }
 
-    public double getY() {
+    public String getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(String y) {
         this.y = y;
     }
 
-    @Override
-    public String toString() {
-        return "Coordinates{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
-    }
 }
