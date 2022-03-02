@@ -7,7 +7,9 @@ import by.it.academy.MK_JD2_88_2.cw1.storage.api.IFlightStorage;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class FlightStorage implements IFlightStorage {
 
@@ -30,21 +32,21 @@ public class FlightStorage implements IFlightStorage {
             StringBuilder builder = new StringBuilder(sql);
             builder.append(" WHERE ");
             if (departureAirport != null) {
-                builder.append("scheduled_departure =?");
+                builder.append("departure_airport =?");
             }
 
             if (arrivalAirport != null) {
                 if (departureAirport != null) {
                     builder.append(" AND ");
                 }
-                builder.append("departure_airport =?");
+                builder.append("arrival_airport =?");
             }
 
             if (scheduledDeparture != null) {
                 if (departureAirport != null || arrivalAirport != null) {
                     builder.append(" AND ");
                 }
-                builder.append("arrival_airport =?");
+                builder.append("scheduled_departure =?");
             }
             sql = builder.toString();
         }
@@ -66,11 +68,11 @@ public class FlightStorage implements IFlightStorage {
 
             if (scheduledDeparture != null) {
                 if (departureAirport != null && arrivalAirport != null) {
-                    statement.setTimestamp(3, Timestamp.valueOf(scheduledDeparture));
+                    statement.setTimestamp(3, Timestamp.valueOf(LocalDateTime.parse(scheduledDeparture)));
                 } else if (departureAirport != null || arrivalAirport != null) {
-                    statement.setTimestamp(2, Timestamp.valueOf(scheduledDeparture));
+                    statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.parse(scheduledDeparture)));
                 } else {
-                    statement.setTimestamp(1,Timestamp.valueOf(scheduledDeparture));
+                    statement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.parse(scheduledDeparture)));
                 }
             }
 
@@ -85,8 +87,15 @@ public class FlightStorage implements IFlightStorage {
                 String arrivalAirportDB = rs.getString(6);
                 String statusDB = rs.getString(7);
                 String aircraftCodeDB = rs.getString(8);
-                LocalDateTime actualDepartureDB = rs.getTimestamp(9).toLocalDateTime();
-                LocalDateTime actualArrivalDB = rs.getTimestamp(10).toLocalDateTime();
+                LocalDateTime actualDepartureDB = null;
+                LocalDateTime actualArrivalDB = null;
+
+                if (rs.getTimestamp(9) != null) {
+                    actualDepartureDB = rs.getTimestamp(9).toLocalDateTime();
+                }
+                if (rs.getTimestamp(10) != null) {
+                    actualArrivalDB = rs.getTimestamp(10).toLocalDateTime();
+                }
 
                 Flight flight = new Flight();
                 flight.setFlightId(flightIdDB);
