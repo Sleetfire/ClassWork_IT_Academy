@@ -31,8 +31,9 @@ public class AirportServlet extends HttpServlet {
         resp.setContentType("application/json; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
 
-        String count = req.getParameter("count");
-        List<Airport> airports = this.service.get(count);
+        String page = req.getParameter("page");
+        String size = req.getParameter("size");
+        List<Airport> airports = this.service.get(page, size);
 
         this.mapper.writeValue(writer, airports);
 

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IAirportService {
 
-    List<Airport> get(String count);
+    List<Airport> get(String page, String size);
 
 }

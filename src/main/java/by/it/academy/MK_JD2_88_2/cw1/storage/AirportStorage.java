@@ -9,6 +9,7 @@ import by.it.academy.MK_JD2_88_2.cw1.storage.api.IAirportStorage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +18,32 @@ public class AirportStorage implements IAirportStorage {
 
     private static IAirportStorage instance = new AirportStorage();
     private final ObjectMapper mapper = new ObjectMapper();
+    private final DataSource dataSource;
 
     private AirportStorage() {
-        DBInitializer.getInstance();
+        dataSource = DBInitializer.getInstance().getDataSource();
     }
 
     @Override
-    public List<Airport> get(int count) {
+    public List<Airport> get(int page, int size) {
         List<Airport> airports = new ArrayList<>();
-        String sql = "SELECT airport_code, airport_name, city, coordinates, timezone FROM bookings.airports_data LIMIT ?";
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/demo?ApplicationName=TestSweetApp", "postgres", "12378");
-             PreparedStatement statement = connection.prepareStatement(sql)
+        int limit = size;
+        int offset = (page - 1) * limit;
+        String sql = "SELECT airport_code, airport_name, city, coordinates, timezone FROM bookings.airports_data";
+
+        if (limit > 0) {
+            sql += "\n LIMIT ? " + limit;
+        }
+
+        if (offset > 0) {
+            sql += "\n OFFSET ?" + offset;
+        }
+        sql += ";";
+
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.prepareStatement(sql)
         ) {
-            statement.setInt(1, count);
-            statement.execute();
+            statement.executeQuery(sql);
             ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 String airportCode = rs.getString(1);

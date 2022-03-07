@@ -16,8 +16,8 @@ public class AirportService implements IAirportService {
     }
 
     @Override
-    public List<Airport> get(String count) {
-        return this.storage.get(getNumberFromString(count));
+    public List<Airport> get(String page, String size) {
+        return this.storage.get(getNumberFromString(page), getNumberFromString(size));
     }
 
     private int getNumberFromString(String str) {
