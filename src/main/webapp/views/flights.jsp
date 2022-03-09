@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<h3>Таблица полетов</h3>
+<h3>Flights table</h3>
 <table border="1px">
     <tr>
         <th width="10%">Flight Id</th>
@@ -44,41 +44,7 @@
     </c:forEach>
 </table>
 
-<form action="/MK_JD2-88-2-0.0.0/flights" method="post">
-    <p>
-        Departure Airports
-        <select name="departureAirport" id="1">
-            <option disabled>Choose Departure Airport</option>
-            <c:forEach var="departureAirports" items="${departureAirports}">
-                <option value="${departureAirports}">${departureAirports}</option>
-            </c:forEach>
-        </select>
-    </p>
-
-    <p>
-        Arrival Airports
-        <select name="arrivalAirport" id="2">
-            <option disabled>Choose Arrival Airports</option>
-            <c:forEach var="arrivalAirports" items="${arrivalAirports}">
-                <option value="${arrivalAirports}">${arrivalAirports}</option>
-            </c:forEach>
-        </select>
-    </p>
-
-    <p>
-        Scheduled Departures
-        <select name="scheduledDeparture" id="3">
-            <option disabled>Choose Scheduled Departure</option>
-            <c:forEach var="scheduledDepartures" items="${scheduledDepartures}">
-                <option value="${scheduledDepartures}">${scheduledDepartures}</option>
-            </c:forEach>
-        </select>
-    </p>
-
-    <p><input type="submit" value="Send"></p>
-</form>
-
-
+<p><input type="button" onclick="location.href='/MK_JD2-88-2-0.0.0/flights_main'" value="Back"></p>
 
 </body>
 </html>

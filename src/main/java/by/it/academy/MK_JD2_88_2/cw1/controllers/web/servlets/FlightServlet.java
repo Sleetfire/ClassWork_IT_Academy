@@ -97,7 +97,7 @@ public class FlightServlet extends HttpServlet {
         }
 
         LocalDateTime scheduledDepartureDT = null;
-        if (scheduledDeparture != null) {
+        if (scheduledDeparture != null && !scheduledDeparture.isEmpty()) {
             scheduledDepartureDT = LocalDateTime.parse(scheduledDeparture);
         }
 

@@ -33,6 +33,6 @@ public class FlightMainServlet extends HttpServlet {
         req.setAttribute("departureAirports", departureAirports);
         req.setAttribute("arrivalAirports", arrivalAirports);
         req.setAttribute("scheduledDepartures", scheduledDepartures);
-        req.getRequestDispatcher("/views/flights.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/flightsMain.jsp").forward(req, resp);
     }
 }
