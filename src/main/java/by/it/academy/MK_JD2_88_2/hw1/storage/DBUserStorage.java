@@ -1,8 +1,10 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.DBInitializer;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,28 +13,10 @@ import java.util.List;
 public class DBUserStorage implements IUserStorage {
 
     private static final IUserStorage instance = new DBUserStorage();
-    private Connection connection = null;
-
-    private final String DB_DRIVER = "org.postgresql.Driver";
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/app?ApplicationName=TestSweetApp";
-    private final String DB_USER = "postgres";
-    private final String DB_PASSWORD = "12378";
-
-    {
-        try {
-            Class.forName(this.DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Проблемы с загрузкой");
-        }
-        try {
-            this.connection = DriverManager.getConnection(
-                    this.DB_URL, this.DB_USER, this.DB_PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Ошибка выполнения SQL " + e.getMessage());
-        }
-    }
+    private final DataSource ds;
 
     private DBUserStorage() {
+        this.ds = DBInitializer.getInstance().getDataSource();
     }
 
     @Override
@@ -40,14 +24,16 @@ public class DBUserStorage implements IUserStorage {
         String login = user.getLogin();
         String password = user.getPassword();
         String name = user.getName();
+        LocalDate regDate = user.getRgDate();
         LocalDate birthday = user.getBirthday();
-        try {
-            String sql = "INSERT INTO app.users (login, password, name, birthday) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        String sql = "INSERT INTO app.users (login, password, name, dt_rg, birthday) VALUES (?, ?, ?, ?, ?)";
+        try (Connection connection = this.ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, name);
-            preparedStatement.setDate(4, Date.valueOf(birthday));
+            preparedStatement.setDate(4, Date.valueOf(regDate));
+            preparedStatement.setDate(5, Date.valueOf(birthday));
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
@@ -57,14 +43,16 @@ public class DBUserStorage implements IUserStorage {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        try (Statement statement = connection.createStatement()){
+        try (Connection connection = this.ds.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT * FROM app.users");
             while (rs.next()) {
                 String userLogin = rs.getString("login");
                 String password = rs.getString("password");
                 String name = rs.getString("name");
+                LocalDate rgDate = rs.getDate("dt_reg").toLocalDate();
                 LocalDate birthday = rs.getDate("birthday").toLocalDate();
-                User user = new User(userLogin, password, name, birthday);
+                User user = new User(userLogin, password, name, rgDate, birthday);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -76,15 +64,19 @@ public class DBUserStorage implements IUserStorage {
     @Override
     public User get(String login) {
         User user = null;
-        try (Statement statement = connection.createStatement()){
-            ResultSet rs = statement.executeQuery("SELECT * FROM app.users WHERE " +
-                    "(login='" + login + "')");
+        String sql = "SELECT login, password, name, birthday, dt_rg FROM app.users WHERE login = ?";
+        try (Connection connection = this.ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, login);
+            statement.execute();
+            ResultSet rs = statement.getResultSet();
             while (rs.next()) {
                 String userLogin = rs.getString("login");
                 String password = rs.getString("password");
                 String name = rs.getString("name");
                 LocalDate birthday = rs.getDate("birthday").toLocalDate();
-                user = new User(userLogin, password, name, birthday);
+                LocalDate rgDate = rs.getDate("dt_rg").toLocalDate();
+                user = new User(userLogin, password, name, rgDate, birthday);
             }
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
@@ -95,7 +87,8 @@ public class DBUserStorage implements IUserStorage {
     @Override
     public int getCount() {
         int count = 0;
-        try ( Statement statement = connection.createStatement()){
+        try (Connection connection = this.ds.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT COUNT (*) FROM app.users");
             while (rs.next()) {
                 count = rs.getInt("count");
@@ -108,9 +101,10 @@ public class DBUserStorage implements IUserStorage {
 
     @Override
     public void delete(String login) {
-        try ( Statement statement = connection.createStatement()){
-           statement.executeUpdate("DELETE FROM app.users WHERE " +
-                   "(login='" + login + "')");
+        try (Connection connection = ds.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DELETE FROM app.users WHERE " +
+                    "(login='" + login + "')");
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
         }

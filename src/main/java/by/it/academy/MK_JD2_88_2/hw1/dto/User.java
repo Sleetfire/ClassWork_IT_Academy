@@ -8,13 +8,18 @@ public class User {
     private String login;
     private String password;
     private String name;
+    private LocalDate rgDate;
     private LocalDate birthday;
 
-    public User(String login, String password, String name, LocalDate birthday) {
+    public User(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
         this.login = login;
         this.password = password;
         this.name = name;
+        this.rgDate = rgDate;
         this.birthday = birthday;
+    }
+
+    public User() {
     }
 
     public String getLogin() {
@@ -41,6 +46,14 @@ public class User {
         this.name = name;
     }
 
+    public LocalDate getRgDate() {
+        return rgDate;
+    }
+
+    public void setRgDate(LocalDate rgDate) {
+        this.rgDate = rgDate;
+    }
+
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -54,22 +67,70 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(this.login, user.login) && Objects.equals(this.name, user.name)
-                && Objects.equals(this.birthday, user.birthday) && Objects.equals(this.password, user.password);
+        return Objects.equals(login, user.login)
+                && Objects.equals(password, user.password)
+                && Objects.equals(name, user.name)
+                && Objects.equals(rgDate, user.rgDate)
+                && Objects.equals(birthday, user.birthday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, name, birthday, password);
+        return Objects.hash(login, password, name, rgDate, birthday);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
-                ", name='" + name + '\'' +
-                ", birthday=" + birthday +
                 ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", rgDate=" + rgDate +
+                ", birthday=" + birthday +
                 '}';
+    }
+
+    public static class Builder {
+        private String login;
+        private String password;
+        private String name;
+        private LocalDate rgDate;
+        private LocalDate birthday;
+
+        private Builder() {
+        }
+
+        public static Builder createBuilder() {
+            return new Builder();
+        }
+
+        public Builder setLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setRgDate(LocalDate rgDate) {
+            this.rgDate = rgDate;
+            return this;
+        }
+
+        public Builder setBirthday(LocalDate birthday) {
+            this.birthday = birthday;
+            return this;
+        }
+
+        public User build() {
+            return new User(this.login, this.password, this.name, this.rgDate, this.birthday);
+        }
     }
 }

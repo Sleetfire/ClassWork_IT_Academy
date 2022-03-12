@@ -1,8 +1,10 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.DBInitializer;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,28 +13,11 @@ import java.util.List;
 public class DBMessageStorage implements IMessageStorage {
 
     private static final IMessageStorage instance = new DBMessageStorage();
-    private Connection connection = null;
+    private final DataSource ds;
 
-    private final String DB_DRIVER = "org.postgresql.Driver";
-    private final String DB_URL = "jdbc:postgresql://localhost:5432/app?ApplicationName=TestSweetApp";
-    private final String DB_USER = "postgres";
-    private final String DB_PASSWORD = "12378";
 
     private DBMessageStorage() {
-    }
-
-    {
-        try {
-            Class.forName(this.DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Проблемы с загрузкой");
-        }
-        try {
-            this.connection = DriverManager.getConnection(
-                    this.DB_URL, this.DB_USER, this.DB_PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Ошибка выполнения SQL " + e.getMessage());
-        }
+        this.ds = DBInitializer.getInstance().getDataSource();
     }
 
     @Override
@@ -42,7 +27,8 @@ public class DBMessageStorage implements IMessageStorage {
         String text = message.getText();
         LocalDateTime dateTime = message.getDateTime();
         String sql = "INSERT INTO app.messages (sender_login, recipient_login, text, data_time) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (Connection connection = this.ds.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, senderLogin);
             preparedStatement.setString(2, recipientLogin);
             preparedStatement.setString(3, text);
@@ -72,7 +58,8 @@ public class DBMessageStorage implements IMessageStorage {
 
     private List<Message> get(String sql) {
         List<Message> messages = new ArrayList<>();
-        try (Statement statement = connection.createStatement()){
+        try (Connection connection = this.ds.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 String senderLogin = rs.getString("sender_login");
@@ -91,7 +78,8 @@ public class DBMessageStorage implements IMessageStorage {
     @Override
     public int getCount() {
         int count = 0;
-        try ( Statement statement = connection.createStatement()){
+        try (Connection connection = this.ds.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT COUNT (*) FROM app.messages");
             while (rs.next()) {
                 count = rs.getInt("count");
@@ -104,7 +92,8 @@ public class DBMessageStorage implements IMessageStorage {
 
     @Override
     public void delete(String login) {
-        try ( Statement statement = connection.createStatement()){
+        try (Connection connection = this.ds.getConnection();
+             Statement statement = connection.createStatement()) {
             statement.executeUpdate("DELETE FROM app.messages WHERE " +
                     "(sender_login='" + login + "')");
         } catch (SQLException e) {
