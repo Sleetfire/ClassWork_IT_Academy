@@ -1,22 +1,27 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage;
 
+import by.it.academy.MK_JD2_88_2.hw1.dto.AuditUser;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.DBInitializer;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.IAuditUserStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBUserStorage implements IUserStorage {
 
     private static final IUserStorage instance = new DBUserStorage();
+    private final IAuditUserStorage auditStorage;
     private final DataSource ds;
 
     private DBUserStorage() {
         this.ds = DBInitializer.getInstance().getDataSource();
+        this.auditStorage = DBAuditUserStorage.getInstance();
     }
 
     @Override
@@ -27,14 +32,27 @@ public class DBUserStorage implements IUserStorage {
         LocalDate regDate = user.getRgDate();
         LocalDate birthday = user.getBirthday();
         String sql = "INSERT INTO app.users (login, password, name, dt_rg, birthday) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = this.ds.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        try (Connection connection = this.ds.getConnection()) {
+            connection.setAutoCommit(false);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, name);
             preparedStatement.setDate(4, Date.valueOf(regDate));
             preparedStatement.setDate(5, Date.valueOf(birthday));
             preparedStatement.execute();
+
+            AuditUser audit = AuditUser.Builder.createBuilder()
+                    .setDtCreate(LocalDateTime.now())
+                    .setText("Registration")
+                    .setAuthor(null)
+                    .setUser(user)
+                    .build();
+            Long count = this.auditStorage.create(audit, connection);
+            if (count == 0L) {
+                connection.rollback();
+            }
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
         }

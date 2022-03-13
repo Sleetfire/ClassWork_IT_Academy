@@ -1,6 +1,5 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage;
 
-import by.it.academy.MK_JD2_88_2.cw1.dto.Flight;
 import by.it.academy.MK_JD2_88_2.hw1.dto.AuditUser;
 import by.it.academy.MK_JD2_88_2.hw1.dto.Pageable;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
@@ -24,7 +23,7 @@ public class DBAuditUserStorage implements IAuditUserStorage {
     }
 
     @Override
-    public Long create(AuditUser audit) {
+    public Long create(AuditUser audit, Connection connection) {
 
         if (audit == null) {
             throw new IllegalStateException("Аудит не может быть null");
@@ -36,14 +35,15 @@ public class DBAuditUserStorage implements IAuditUserStorage {
         String userLogin = user.getLogin();
 
         String sql = "INSERT INTO app.audit_users (dt_create, text, author, \"user\") VALUES (?, ?, ?, ?)";
-        try (Connection connection = this.ds.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"})) {
+        try (PreparedStatement ps = connection.prepareStatement(sql, new String[] {"id"})) {
             ps.setTimestamp(1, Timestamp.valueOf(dtCreate));
             ps.setString(2, text);
             ps.setString(3, audit.getAuthor() != null ? audit.getAuthor().getLogin() : null);
             ps.setString(4, userLogin);
 
             ps.executeUpdate();
+
+            connection.commit();
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -56,7 +56,7 @@ public class DBAuditUserStorage implements IAuditUserStorage {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
         }
 
-        return 1L;
+        return 0L;
     }
 
     @Override
@@ -112,7 +112,7 @@ public class DBAuditUserStorage implements IAuditUserStorage {
                 User author = User.Builder.createBuilder()
                         .setLogin(rs.getString("author"))
                         .setName(rs.getString("author"))
-                        .setRgDate(rs.getObject("author_dt_rg", LocalDate.class))
+                        .setRgDate(rs.  getObject("author_dt_rg", LocalDate.class))
                         .setBirthday(rs.getObject("author_birthday", LocalDate.class))
                         .build();
                 User user = User.Builder.createBuilder()
