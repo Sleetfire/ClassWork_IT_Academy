@@ -16,4 +16,8 @@ public interface IUserService {
 
     void deleteUserByLogin(String login);
 
+    boolean checkPassword(String login, String password);
+
+    boolean isExist(String login);
+
 }

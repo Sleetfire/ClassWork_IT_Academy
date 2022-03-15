@@ -41,6 +41,22 @@ public class UserService implements IUserService {
         this.storage.delete(login);
     }
 
+    @Override
+    public boolean checkPassword(String login, String password) {
+        User user = this.getUserByLogin(login);
+        if (isExist(login)) {
+            String userPassword = user.getPassword();
+            return Objects.equals(userPassword, password);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isExist(String login) {
+        return getUserByLogin(login) != null;
+    }
+
     public static IUserService getInstance() {
         return instance;
     }

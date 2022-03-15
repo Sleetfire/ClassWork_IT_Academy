@@ -47,7 +47,7 @@ public class SignUpServlet extends HttpServlet {
             LocalDate birthday = LocalDate.parse(strBirthday);
             User user = new User(login, password, name, LocalDate.now(), birthday);
             this.service.createUser(user);
-            req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
+            resp.sendRedirect("/MK_JD2-88-2-0.0.0/main");
         }
     }
 

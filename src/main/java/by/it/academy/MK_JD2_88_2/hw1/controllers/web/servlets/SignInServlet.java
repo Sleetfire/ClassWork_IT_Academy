@@ -35,13 +35,11 @@ public class SignInServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        User user = this.service.getUserByLogin(login);
-        if (user != null) {
-            String userPassword = user.getPassword();
-            if (Objects.equals(userPassword, password)) {
+        if (this.service.isExist(login)) {
+            if (this.service.checkPassword(login, password)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("user", user);
-                req.getRequestDispatcher("/views/mainPage.jsp").forward(req, resp);
+                session.setAttribute("user", service.getUserByLogin(login));
+                resp.sendRedirect("/MK_JD2-88-2-0.0.0/main");
             } else {
                 req.setAttribute("wrongPassword", true);
                 req.getRequestDispatcher(this.signInFilePath).forward(req, resp);
