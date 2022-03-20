@@ -1,6 +1,6 @@
-package by.it.academy.MK_JD2_88_2.hw1.session_counter;
+package by.it.academy.MK_JD2_88_2.hw1.service.session_counter;
 
-import by.it.academy.MK_JD2_88_2.hw1.session_counter.api.ISessionCounter;
+import by.it.academy.MK_JD2_88_2.hw1.service.session_counter.api.ISessionCounter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

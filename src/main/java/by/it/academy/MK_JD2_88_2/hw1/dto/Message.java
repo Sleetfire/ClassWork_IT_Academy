@@ -1,20 +1,43 @@
 package by.it.academy.MK_JD2_88_2.hw1.dto;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "messages")
 public class Message {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "sender_login")
     private String senderLogin;
+    @Column(name = "recipient_login")
     private String recipientLogin;
+    @Column(name = "text")
     private String text;
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
+
+    public Message() {
+
+    }
 
     public Message(String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
         this.senderLogin = senderLogin;
         this.recipientLogin = recipientLogin;
         this.text = text;
         this.dateTime = dateTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSenderLogin() {
@@ -55,19 +78,22 @@ public class Message {
         if (o == null || getClass() != o.getClass()) return false;
         Message message = (Message) o;
         return Objects.equals(senderLogin, message.senderLogin)
-                && Objects.equals(recipientLogin, message.recipientLogin) && Objects.equals(text, message.text)
+                && Objects.equals(id, message.id)
+                && Objects.equals(recipientLogin, message.recipientLogin)
+                && Objects.equals(text, message.text)
                 && Objects.equals(dateTime, message.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderLogin, recipientLogin, text, dateTime);
+        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id);
     }
 
     @Override
     public String toString() {
         return "Message{" +
-                "senderLogin='" + senderLogin + '\'' +
+                "id=" + id +
+                ", senderLogin='" + senderLogin + '\'' +
                 ", recipientLogin='" + recipientLogin + '\'' +
                 ", text='" + text + '\'' +
                 ", dateTime=" + dateTime +

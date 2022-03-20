@@ -65,7 +65,7 @@ public class DBMessageStorage implements IMessageStorage {
                 String senderLogin = rs.getString("sender_login");
                 String recipientLogin = rs.getString("recipient_login");
                 String text = rs.getString("text");
-                LocalDateTime dateTime = rs.getTimestamp("data_time").toLocalDateTime();
+                LocalDateTime dateTime = rs.getTimestamp("date_time").toLocalDateTime();
                 Message message = new Message(senderLogin, recipientLogin, text, dateTime);
                 messages.add(message);
             }

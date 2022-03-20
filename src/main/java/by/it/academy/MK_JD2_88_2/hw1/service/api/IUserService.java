@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface IUserService {
 
-    void createUser(User user);
+    void create(User user);
 
-    List<User> getUsers();
+    List<User> getAll();
 
-    User getUserByLogin(String login);
+    User getByLogin(String login);
 
-    int getUserCount();
+    int getCount();
 
-    void deleteUserByLogin(String login);
+    void deleteByLogin(String login);
 
     boolean checkPassword(String login, String password);
 

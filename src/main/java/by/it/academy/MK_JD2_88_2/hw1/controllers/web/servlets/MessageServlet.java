@@ -43,11 +43,11 @@ public class MessageServlet extends HttpServlet {
         String recipientLogin = req.getParameter("recipientLogin");
         String text = req.getParameter("text");
 
-        User recipientUser = userService.getUserByLogin(recipientLogin);
+        User recipientUser = userService.getByLogin(recipientLogin);
 
         if (recipientUser != null) {
             Message message = new Message(senderLogin, recipientLogin, text, LocalDateTime.now());
-            this.service.createMessage(message);
+            this.service.create(message);
         } else {
             req.setAttribute("wrongRecipientLogin", true);
         }

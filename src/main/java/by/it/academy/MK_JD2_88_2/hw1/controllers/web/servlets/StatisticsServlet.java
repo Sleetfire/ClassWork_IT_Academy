@@ -4,8 +4,8 @@ import by.it.academy.MK_JD2_88_2.hw1.service.MessageService;
 import by.it.academy.MK_JD2_88_2.hw1.service.UserService;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IMessageService;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IUserService;
-import by.it.academy.MK_JD2_88_2.hw1.session_counter.SessionCounter;
-import by.it.academy.MK_JD2_88_2.hw1.session_counter.api.ISessionCounter;
+import by.it.academy.MK_JD2_88_2.hw1.service.session_counter.SessionCounter;
+import by.it.academy.MK_JD2_88_2.hw1.service.session_counter.api.ISessionCounter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +31,8 @@ public class StatisticsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
 
-        int usersCount = this.userService.getUserCount();
-        int messagesCount = this.messageService.getMessagesCount();
+        int usersCount = this.userService.getCount();
+        int messagesCount = this.messageService.getCount();
         int sessionsCount = this.sessionCounter.getCounter();
 
         req.setAttribute("usersCount", usersCount);

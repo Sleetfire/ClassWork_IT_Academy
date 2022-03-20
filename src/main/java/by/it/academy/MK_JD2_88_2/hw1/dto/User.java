@@ -1,14 +1,26 @@
 package by.it.academy.MK_JD2_88_2.hw1.dto;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "login")
     private String login;
+    @Column(name = "password")
     private String password;
+    @Column(name = "name")
     private String name;
+    @Column(name = "dt_rg")
     private LocalDate rgDate;
+    @Column(name = "birthday")
     private LocalDate birthday;
 
     public User(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
@@ -20,6 +32,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -68,6 +88,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(login, user.login)
+                && Objects.equals(id, user.id)
                 && Objects.equals(password, user.password)
                 && Objects.equals(name, user.name)
                 && Objects.equals(rgDate, user.rgDate)
@@ -76,13 +97,14 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, name, rgDate, birthday);
+        return Objects.hash(login, password, name, rgDate, birthday, id);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "login='" + login + '\'' +
+                "id=" + id +
+                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", rgDate=" + rgDate +

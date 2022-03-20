@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface IMessageService {
 
-    void createMessage(Message message);
+    void create(Message message);
 
-    List<Message> getAllMessages();
+    List<Message> getAll();
 
-    List<Message> getMessagesBySenderLogin(String login);
+    List<Message> getBySenderLogin(String login);
 
-    List<Message> getMessagesByRecipientLogin(String login);
+    List<Message> getByRecipientLogin(String login);
 
-    int getMessagesCount();
+    int getCount();
 
-    void deleteMessagesByUserLogin(String login);
+    void deleteByUserLogin(String login);
 
 }

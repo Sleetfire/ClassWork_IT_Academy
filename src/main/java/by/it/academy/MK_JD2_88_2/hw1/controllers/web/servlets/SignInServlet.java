@@ -1,6 +1,5 @@
 package by.it.academy.MK_JD2_88_2.hw1.controllers.web.servlets;
 
-import by.it.academy.MK_JD2_88_2.hw1.dto.User;
 import by.it.academy.MK_JD2_88_2.hw1.service.UserService;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IUserService;
 
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Objects;
 
 @WebServlet(name = "SignInServlet", urlPatterns = "/signIn")
 public class SignInServlet extends HttpServlet {
@@ -38,7 +36,7 @@ public class SignInServlet extends HttpServlet {
         if (this.service.isExist(login)) {
             if (this.service.checkPassword(login, password)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("user", service.getUserByLogin(login));
+                session.setAttribute("user", service.getByLogin(login));
                 resp.sendRedirect("/MK_JD2-88-2-0.0.0/main");
             } else {
                 req.setAttribute("wrongPassword", true);

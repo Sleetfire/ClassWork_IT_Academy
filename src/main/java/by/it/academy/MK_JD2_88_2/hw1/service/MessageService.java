@@ -18,32 +18,32 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public void createMessage(Message message) {
+    public void create(Message message) {
        this.storage.create(message);
     }
 
     @Override
-    public List<Message> getAllMessages() {
+    public List<Message> getAll() {
         return this.storage.getAll();
     }
 
     @Override
-    public List<Message> getMessagesBySenderLogin(String login) {
+    public List<Message> getBySenderLogin(String login) {
        return this.storage.getBySenderLogin(login);
     }
 
     @Override
-    public List<Message> getMessagesByRecipientLogin(String login) {
+    public List<Message> getByRecipientLogin(String login) {
         return this.storage.getByRecipientLogin(login);
     }
 
     @Override
-    public int getMessagesCount() {
+    public int getCount() {
         return this.storage.getCount();
     }
 
     @Override
-    public void deleteMessagesByUserLogin(String login) {
+    public void deleteByUserLogin(String login) {
         this.storage.delete(login);
     }
 

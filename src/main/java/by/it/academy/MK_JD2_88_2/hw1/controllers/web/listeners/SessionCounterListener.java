@@ -1,7 +1,7 @@
 package by.it.academy.MK_JD2_88_2.hw1.controllers.web.listeners;
 
-import by.it.academy.MK_JD2_88_2.hw1.session_counter.SessionCounter;
-import by.it.academy.MK_JD2_88_2.hw1.session_counter.api.ISessionCounter;
+import by.it.academy.MK_JD2_88_2.hw1.service.session_counter.SessionCounter;
+import by.it.academy.MK_JD2_88_2.hw1.service.session_counter.api.ISessionCounter;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;

@@ -46,13 +46,13 @@ public class SignUpServlet extends HttpServlet {
         } else {
             LocalDate birthday = LocalDate.parse(strBirthday);
             User user = new User(login, password, name, LocalDate.now(), birthday);
-            this.service.createUser(user);
+            this.service.create(user);
             resp.sendRedirect("/MK_JD2-88-2-0.0.0/main");
         }
     }
 
     private boolean isUserCreated(String login) {
-        User user = this.service.getUserByLogin(login);
+        User user = this.service.getByLogin(login);
         return user != null;
     }
 }
