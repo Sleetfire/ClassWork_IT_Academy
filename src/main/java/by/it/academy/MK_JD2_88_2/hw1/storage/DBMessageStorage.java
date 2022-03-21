@@ -21,7 +21,7 @@ public class DBMessageStorage implements IMessageStorage {
     }
 
     @Override
-    public void create(Message message) {
+    public void add(Message message) {
         String senderLogin = message.getSenderLogin();
         String recipientLogin = message.getRecipientLogin();
         String text = message.getText();

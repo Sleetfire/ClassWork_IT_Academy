@@ -3,7 +3,7 @@ package by.it.academy.MK_JD2_88_2.hw1.service;
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IMessageService;
 import by.it.academy.MK_JD2_88_2.hw1.storage.DBMessageStorage;
-import by.it.academy.MK_JD2_88_2.hw1.storage.MessageStorage;
+import by.it.academy.MK_JD2_88_2.hw1.storage.HibernateMessageStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 
 import java.util.*;
@@ -11,15 +11,15 @@ import java.util.*;
 public class MessageService implements IMessageService {
 
     private static final IMessageService instance = new MessageService();
-    private final Map<String, List<Message>> messagesMap = new HashMap<>();
-    private final IMessageStorage storage = DBMessageStorage.getInstance();
+    //private final IMessageStorage storage = DBMessageStorage.getInstance();
+    private final IMessageStorage storage = HibernateMessageStorage.getInstance();
 
     private MessageService() {
     }
 
     @Override
     public void create(Message message) {
-       this.storage.create(message);
+       this.storage.add(message);
     }
 
     @Override

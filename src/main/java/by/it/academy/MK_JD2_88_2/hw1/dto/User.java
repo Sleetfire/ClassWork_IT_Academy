@@ -2,7 +2,7 @@ package by.it.academy.MK_JD2_88_2.hw1.dto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +22,15 @@ public class User {
     private LocalDate rgDate;
     @Column(name = "birthday")
     private LocalDate birthday;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Message> messages = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<AuditUserEntity> userAudits = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<AuditUserEntity> authorAudits = new ArrayList<>();
 
     public User(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
         this.login = login;
@@ -82,6 +91,30 @@ public class User {
         this.birthday = birthday;
     }
 
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
+
+    public List<AuditUserEntity> getUserAudits() {
+        return userAudits;
+    }
+
+    public void setUserAudits(List<AuditUserEntity> userAudits) {
+        this.userAudits = userAudits;
+    }
+
+    public List<AuditUserEntity> getAuthorAudits() {
+        return authorAudits;
+    }
+
+    public void setAuthorAudits(List<AuditUserEntity> authorAudits) {
+        this.authorAudits = authorAudits;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,12 +125,15 @@ public class User {
                 && Objects.equals(password, user.password)
                 && Objects.equals(name, user.name)
                 && Objects.equals(rgDate, user.rgDate)
-                && Objects.equals(birthday, user.birthday);
+                && Objects.equals(birthday, user.birthday)
+                && Objects.equals(messages, user.messages)
+                && Objects.equals(userAudits, user.userAudits)
+                && Objects.equals(authorAudits, user.authorAudits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, name, rgDate, birthday, id);
+        return Objects.hash(login, password, name, rgDate, birthday, id, messages, userAudits, authorAudits);
     }
 
     @Override
@@ -109,6 +145,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", rgDate=" + rgDate +
                 ", birthday=" + birthday +
+                ", messages=" + messages +
+                ", userAudits=" + userAudits +
+                ", authorAudits=" + authorAudits +
                 '}';
     }
 

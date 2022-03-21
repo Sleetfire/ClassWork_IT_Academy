@@ -1,18 +1,23 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage;
 
+import by.it.academy.MK_JD2_88_2.hw1.dto.AuditUserEntity;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.IAuditUserEntityStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class HibernateUserStorage implements IUserStorage {
 
     private static IUserStorage instance = new HibernateUserStorage();
     private final EntityManagerFactory entityManagerFactory;
+    private final IAuditUserEntityStorage auditUserEntityStorage;
 
     private HibernateUserStorage() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("by.it.academy.MK_JD2_88_2.jpa");
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("by.it.academy.MK_JD2_88_2.jpa");
+        this.auditUserEntityStorage = HibernateAuditUserStorage.getInstance();
     }
 
     @Override
@@ -20,7 +25,14 @@ public class HibernateUserStorage implements IUserStorage {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(user);
-        entityManager.getTransaction().commit();
+
+        AuditUserEntity audit = AuditUserEntity.Builder.createBuilder()
+                .setDtCreate(LocalDateTime.now())
+                .setText("Registration")
+                .setAuthor(null)
+                .setUser(user)
+                .build();
+        this.auditUserEntityStorage.create(audit, entityManager);
         entityManager.close();
     }
 
@@ -59,6 +71,7 @@ public class HibernateUserStorage implements IUserStorage {
     public void delete(String login) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
+        this.auditUserEntityStorage.deleteByUserId(Math.toIntExact(get(login).getId()));
         Query query = entityManager.createQuery("delete from User where login = :paramName");
         query.setParameter("paramName", login);
         int result = query.executeUpdate();

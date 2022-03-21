@@ -16,7 +16,7 @@ public class MessageStorage implements IMessageStorage {
     }
 
     @Override
-    public void create(Message message) {
+    public void add(Message message) {
         String login = message.getRecipientLogin();
         List<Message> messages = this.messagesMap.getOrDefault(login, new ArrayList<>());
         messages.add(message);

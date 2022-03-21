@@ -21,6 +21,11 @@ public class Message {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     public Message() {
 
     }
@@ -72,6 +77,14 @@ public class Message {
         this.dateTime = dateTime;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,12 +94,13 @@ public class Message {
                 && Objects.equals(id, message.id)
                 && Objects.equals(recipientLogin, message.recipientLogin)
                 && Objects.equals(text, message.text)
-                && Objects.equals(dateTime, message.dateTime);
+                && Objects.equals(dateTime, message.dateTime)
+                && Objects.equals(user, message.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id);
+        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id, user);
     }
 
     @Override
@@ -97,6 +111,7 @@ public class Message {
                 ", recipientLogin='" + recipientLogin + '\'' +
                 ", text='" + text + '\'' +
                 ", dateTime=" + dateTime +
+                ", user=" + user +
                 '}';
     }
 }
