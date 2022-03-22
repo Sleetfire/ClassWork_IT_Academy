@@ -2,8 +2,7 @@ package by.it.academy.MK_JD2_88_2.hw1.service;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IMessageService;
-import by.it.academy.MK_JD2_88_2.hw1.storage.DBMessageStorage;
-import by.it.academy.MK_JD2_88_2.hw1.storage.HibernateMessageStorage;
+import by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.HibernateMessageStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 
 import java.util.*;

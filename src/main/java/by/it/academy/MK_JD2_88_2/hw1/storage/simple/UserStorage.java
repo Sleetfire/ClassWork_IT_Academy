@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.hw1.storage;
+package by.it.academy.MK_JD2_88_2.hw1.storage.simple;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;

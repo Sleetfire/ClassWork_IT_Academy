@@ -1,7 +1,7 @@
-package by.it.academy.MK_JD2_88_2.hw1.storage;
+package by.it.academy.MK_JD2_88_2.hw1.storage.sql;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
-import by.it.academy.MK_JD2_88_2.hw1.storage.api.DBInitializer;
+import by.it.academy.MK_JD2_88_2.hw1.storage.sql.api.DBInitializer;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 
 import javax.sql.DataSource;

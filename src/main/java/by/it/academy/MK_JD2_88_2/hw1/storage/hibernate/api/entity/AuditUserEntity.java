@@ -1,4 +1,4 @@
-package by.it.academy.MK_JD2_88_2.hw1.dto;
+package by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,14 +18,13 @@ public class AuditUserEntity {
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = true)
-    private User author;
+    private UserEntity author;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
 
-
-    public AuditUserEntity(Long id, LocalDateTime dtCreate, String text, User author, User user) {
+    public AuditUserEntity(Long id, LocalDateTime dtCreate, String text, UserEntity author, UserEntity user) {
         this.id = id;
         this.dtCreate = dtCreate;
         this.text = text;
@@ -33,7 +32,7 @@ public class AuditUserEntity {
         this.user = user;
     }
 
-    public AuditUserEntity(LocalDateTime dtCreate, String text, User author, User user) {
+    public AuditUserEntity(LocalDateTime dtCreate, String text, UserEntity author, UserEntity user) {
         this.dtCreate = dtCreate;
         this.text = text;
         this.author = author;
@@ -55,11 +54,11 @@ public class AuditUserEntity {
         return text;
     }
 
-    public User getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
@@ -75,10 +74,11 @@ public class AuditUserEntity {
     }
 
     public static class Builder {
+        private Long id;
         private LocalDateTime dtCreate;
         private String text;
-        private User author;
-        private User user;
+        private UserEntity author;
+        private UserEntity user;
 
         private Builder() {
 
@@ -86,6 +86,11 @@ public class AuditUserEntity {
 
         public static Builder createBuilder() {
             return new Builder();
+        }
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public Builder setDtCreate(LocalDateTime dtCreate) {
@@ -98,12 +103,12 @@ public class AuditUserEntity {
             return this;
         }
 
-        public Builder setAuthor(User author) {
+        public Builder setAuthor(UserEntity author) {
             this.author = author;
             return this;
         }
 
-        public Builder setUser(User user) {
+        public Builder setUser(UserEntity user) {
             this.user = user;
             return this;
         }

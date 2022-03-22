@@ -14,9 +14,9 @@
             Homework application
         </description>
 
-        <class>by.it.academy.MK_JD2_88_2.hw1.dto.User</class>
-        <class>by.it.academy.MK_JD2_88_2.hw1.dto.Message</class>
-        <class>by.it.academy.MK_JD2_88_2.hw1.dto.AuditUser</class>
+        <class>by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity.UserEntity</class>
+        <class>by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity.MessageEntity</class>
+        <class>by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity.AuditUserEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />

@@ -25,9 +25,6 @@ public class AuditUser {
         this.user = user;
     }
 
-    public AuditUser() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -60,6 +57,7 @@ public class AuditUser {
     }
 
     public static class Builder {
+        private Long id;
         private LocalDateTime dtCreate;
         private String text;
         private User author;
@@ -71,6 +69,11 @@ public class AuditUser {
 
         public static Builder createBuilder() {
             return new Builder();
+        }
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public Builder setDtCreate(LocalDateTime dtCreate) {
@@ -94,8 +97,7 @@ public class AuditUser {
         }
 
         public AuditUser build() {
-            return new AuditUser(this.dtCreate, this.text, this.author, this.user);
+            return new AuditUser(this.id, this.dtCreate, this.text, this.author, this.user);
         }
     }
-
 }

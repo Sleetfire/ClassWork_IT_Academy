@@ -1,25 +1,38 @@
-package by.it.academy.MK_JD2_88_2.hw1.dto;
+package by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity;
 
+import by.it.academy.MK_JD2_88_2.hw1.dto.User;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Message {
+@Entity
+@Table(name = "messages")
+public class MessageEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "sender_login")
     private String senderLogin;
+    @Column(name = "recipient_login")
     private String recipientLogin;
+    @Column(name = "text")
     private String text;
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    public Message(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
-        this.id = id;
-        this.senderLogin = senderLogin;
-        this.recipientLogin = recipientLogin;
-        this.text = text;
-        this.dateTime = dateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
+
+    public MessageEntity() {
+
     }
 
-    public Message(String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
+    public MessageEntity(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
         this.senderLogin = senderLogin;
         this.recipientLogin = recipientLogin;
         this.text = text;
@@ -66,21 +79,30 @@ public class Message {
         this.dateTime = dateTime;
     }
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Message message = (Message) o;
+        MessageEntity message = (MessageEntity) o;
         return Objects.equals(senderLogin, message.senderLogin)
                 && Objects.equals(id, message.id)
                 && Objects.equals(recipientLogin, message.recipientLogin)
                 && Objects.equals(text, message.text)
-                && Objects.equals(dateTime, message.dateTime);
+                && Objects.equals(dateTime, message.dateTime)
+                && Objects.equals(user, message.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id);
+        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id, user);
     }
 
     @Override
@@ -91,6 +113,7 @@ public class Message {
                 ", recipientLogin='" + recipientLogin + '\'' +
                 ", text='" + text + '\'' +
                 ", dateTime=" + dateTime +
+                ", user=" + user +
                 '}';
     }
 
@@ -134,9 +157,8 @@ public class Message {
             return this;
         }
 
-        public Message build() {
-            return new Message(id, senderLogin, recipientLogin, text, dateTime);
+        public MessageEntity build() {
+            return new MessageEntity(id, senderLogin, recipientLogin, text, dateTime);
         }
     }
-
 }

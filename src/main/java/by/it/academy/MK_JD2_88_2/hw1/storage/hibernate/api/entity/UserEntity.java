@@ -1,19 +1,38 @@
-package by.it.academy.MK_JD2_88_2.hw1.dto;
+package by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class User {
+@Entity
+@Table(name = "users")
+public class UserEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "login")
     private String login;
+    @Column(name = "password")
     private String password;
+    @Column(name = "name")
     private String name;
+    @Column(name = "dt_rg")
     private LocalDate rgDate;
+    @Column(name = "birthday")
     private LocalDate birthday;
 
-    public User(Long id, String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
-        this.id = id;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<MessageEntity> messages = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<AuditUserEntity> userAudits = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private List<AuditUserEntity> authorAudits = new ArrayList<>();
+
+    public UserEntity(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
         this.login = login;
         this.password = password;
         this.name = name;
@@ -21,12 +40,7 @@ public class User {
         this.birthday = birthday;
     }
 
-    public User(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.rgDate = rgDate;
-        this.birthday = birthday;
+    public UserEntity() {
     }
 
     public Long getId() {
@@ -77,22 +91,49 @@ public class User {
         this.birthday = birthday;
     }
 
+    public Set<MessageEntity> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<MessageEntity> messages) {
+        this.messages = messages;
+    }
+
+    public List<AuditUserEntity> getUserAudits() {
+        return userAudits;
+    }
+
+    public void setUserAudits(List<AuditUserEntity> userAudits) {
+        this.userAudits = userAudits;
+    }
+
+    public List<AuditUserEntity> getAuthorAudits() {
+        return authorAudits;
+    }
+
+    public void setAuthorAudits(List<AuditUserEntity> authorAudits) {
+        this.authorAudits = authorAudits;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        UserEntity user = (UserEntity) o;
         return Objects.equals(login, user.login)
                 && Objects.equals(id, user.id)
                 && Objects.equals(password, user.password)
                 && Objects.equals(name, user.name)
                 && Objects.equals(rgDate, user.rgDate)
-                && Objects.equals(birthday, user.birthday);
+                && Objects.equals(birthday, user.birthday)
+                && Objects.equals(messages, user.messages)
+                && Objects.equals(userAudits, user.userAudits)
+                && Objects.equals(authorAudits, user.authorAudits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, name, rgDate, birthday, id);
+        return Objects.hash(login, password, name, rgDate, birthday, id, messages, userAudits, authorAudits);
     }
 
     @Override
@@ -104,11 +145,13 @@ public class User {
                 ", name='" + name + '\'' +
                 ", rgDate=" + rgDate +
                 ", birthday=" + birthday +
+                ", messages=" + messages +
+                ", userAudits=" + userAudits +
+                ", authorAudits=" + authorAudits +
                 '}';
     }
 
     public static class Builder {
-        private Long id;
         private String login;
         private String password;
         private String name;
@@ -120,11 +163,6 @@ public class User {
 
         public static Builder createBuilder() {
             return new Builder();
-        }
-
-        public Builder setId(Long id) {
-            this.id = id;
-            return this;
         }
 
         public Builder setLogin(String login) {
@@ -152,8 +190,8 @@ public class User {
             return this;
         }
 
-        public User build() {
-            return new User(this.id, this.login, this.password, this.name, this.rgDate, this.birthday);
+        public UserEntity build() {
+            return new UserEntity(this.login, this.password, this.name, this.rgDate, this.birthday);
         }
     }
 }

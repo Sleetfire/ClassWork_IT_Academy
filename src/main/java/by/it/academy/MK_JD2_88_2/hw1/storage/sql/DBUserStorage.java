@@ -1,8 +1,8 @@
-package by.it.academy.MK_JD2_88_2.hw1.storage;
+package by.it.academy.MK_JD2_88_2.hw1.storage.sql;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.AuditUser;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
-import by.it.academy.MK_JD2_88_2.hw1.storage.api.DBInitializer;
+import by.it.academy.MK_JD2_88_2.hw1.storage.sql.api.DBInitializer;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IAuditUserStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 
@@ -48,10 +48,7 @@ public class DBUserStorage implements IUserStorage {
                     .setAuthor(null)
                     .setUser(user)
                     .build();
-            Long count = this.auditStorage.create(audit, connection);
-            if (count == 0L) {
-                connection.rollback();
-            }
+            this.auditStorage.create(audit);
             preparedStatement.close();
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());
