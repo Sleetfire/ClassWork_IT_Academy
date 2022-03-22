@@ -10,6 +10,8 @@ public class Message {
     private String recipientLogin;
     private String text;
     private LocalDateTime dateTime;
+    private User author;
+    private User user;
 
     public Message(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
         this.id = id;
@@ -24,6 +26,16 @@ public class Message {
         this.recipientLogin = recipientLogin;
         this.text = text;
         this.dateTime = dateTime;
+    }
+
+    private Message(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime, User author, User user) {
+        this.id = id;
+        this.senderLogin = senderLogin;
+        this.recipientLogin = recipientLogin;
+        this.text = text;
+        this.dateTime = dateTime;
+        this.author = author;
+        this.user = user;
     }
 
     public Long getId() {
@@ -66,6 +78,22 @@ public class Message {
         this.dateTime = dateTime;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,12 +103,14 @@ public class Message {
                 && Objects.equals(id, message.id)
                 && Objects.equals(recipientLogin, message.recipientLogin)
                 && Objects.equals(text, message.text)
-                && Objects.equals(dateTime, message.dateTime);
+                && Objects.equals(dateTime, message.dateTime)
+                && Objects.equals(author, message.author)
+                && Objects.equals(user, message.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id);
+        return Objects.hash(senderLogin, recipientLogin, text, dateTime, id, author, user);
     }
 
     @Override
@@ -100,6 +130,8 @@ public class Message {
         private String recipientLogin;
         private String text;
         private LocalDateTime dateTime;
+        private User author;
+        private User user;
 
         private Builder() {
 
@@ -134,8 +166,18 @@ public class Message {
             return this;
         }
 
+        public Builder setAuthor(User author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder setUser(User user) {
+            this.user = user;
+            return this;
+        }
+
         public Message build() {
-            return new Message(id, senderLogin, recipientLogin, text, dateTime);
+            return new Message(id, senderLogin, recipientLogin, text, dateTime, author, user);
         }
     }
 

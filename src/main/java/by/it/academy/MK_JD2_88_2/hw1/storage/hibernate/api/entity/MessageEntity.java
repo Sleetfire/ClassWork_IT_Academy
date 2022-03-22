@@ -39,6 +39,15 @@ public class MessageEntity {
         this.dateTime = dateTime;
     }
 
+    private MessageEntity(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime, UserEntity user) {
+        this.id = id;
+        this.senderLogin = senderLogin;
+        this.recipientLogin = recipientLogin;
+        this.text = text;
+        this.dateTime = dateTime;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -123,6 +132,7 @@ public class MessageEntity {
         private String recipientLogin;
         private String text;
         private LocalDateTime dateTime;
+        private UserEntity user;
 
         private Builder() {
 
@@ -157,8 +167,13 @@ public class MessageEntity {
             return this;
         }
 
+        public Builder setUser(UserEntity user) {
+            this.user = user;
+            return this;
+        }
+
         public MessageEntity build() {
-            return new MessageEntity(id, senderLogin, recipientLogin, text, dateTime);
+            return new MessageEntity(id, senderLogin, recipientLogin, text, dateTime, user);
         }
     }
 }

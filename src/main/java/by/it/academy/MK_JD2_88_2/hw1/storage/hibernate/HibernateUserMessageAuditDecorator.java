@@ -48,10 +48,9 @@ public class HibernateUserMessageAuditDecorator implements IUserStorage {
 
     @Override
     public void delete(String login) {
-        this.userStorage.delete(login);
-        this.messageStorage.delete(login);
         this.auditUserStorage.deleteByUser(get(login));
-
+        this.messageStorage.delete(login);
+        this.userStorage.delete(login);
     }
 
     public static IUserStorage getInstance() {

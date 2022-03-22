@@ -29,10 +29,9 @@ public class UserMain {
 //
         System.out.println(storage.getCount());
 //
-      System.out.println(storage.get("login"));
+        System.out.println(storage.get("login"));
 
         storage.delete("login");
-
 
 
     }
