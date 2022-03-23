@@ -12,6 +12,7 @@ public class User {
     private LocalDate rgDate;
     private LocalDate birthday;
 
+
     public User(Long id, String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
         this.id = id;
         this.login = login;

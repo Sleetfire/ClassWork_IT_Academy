@@ -40,6 +40,15 @@ public class UserEntity {
         this.birthday = birthday;
     }
 
+    private UserEntity(Long id, String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.rgDate = rgDate;
+        this.birthday = birthday;
+    }
+
     public UserEntity() {
     }
 
@@ -152,13 +161,20 @@ public class UserEntity {
     }
 
     public static class Builder {
+        private Long id;
         private String login;
         private String password;
         private String name;
         private LocalDate rgDate;
         private LocalDate birthday;
 
+
         private Builder() {
+        }
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public static Builder createBuilder() {
@@ -191,7 +207,7 @@ public class UserEntity {
         }
 
         public UserEntity build() {
-            return new UserEntity(this.login, this.password, this.name, this.rgDate, this.birthday);
+            return new UserEntity(this.id, this.login, this.password, this.name, this.rgDate, this.birthday);
         }
     }
 }

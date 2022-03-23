@@ -24,7 +24,7 @@ public class HibernateUserMessageAuditDecorator implements IUserStorage {
     public void add(User user) {
         this.userStorage.add(user);
         AuditUser auditUser = AuditUser.Builder.createBuilder()
-                .setUser(user)
+                .setUser(this.userStorage.get(user.getLogin()))
                 .setAuthor(null)
                 .setText("Registration")
                 .setDtCreate(LocalDateTime.now()).build();

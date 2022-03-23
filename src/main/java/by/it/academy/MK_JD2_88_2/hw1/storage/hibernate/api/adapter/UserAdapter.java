@@ -25,6 +25,7 @@ public class UserAdapter implements IEntityDTOAdapter<UserEntity, User> {
             return null;
         }
         return UserEntity.Builder.createBuilder()
+                .setId(object.getId())
                 .setLogin(object.getLogin())
                 .setPassword(object.getPassword())
                 .setName(object.getName())

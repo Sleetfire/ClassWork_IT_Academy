@@ -37,6 +37,7 @@ public class AuditUserAdapter implements IEntityDTOAdapter<AuditUserEntity, Audi
                 .setDtCreate(object.getDtCreate())
                 .setText(object.getText())
                 .setAuthor(this.adapter.dtoToEntity(object.getAuthor()))
-                .setUser(this.adapter.dtoToEntity(object.getUser())).build();
+                .setUser(this.adapter.dtoToEntity(object.getUser()))
+                .build();
     }
 }

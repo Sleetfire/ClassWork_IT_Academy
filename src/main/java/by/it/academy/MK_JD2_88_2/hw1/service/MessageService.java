@@ -2,6 +2,7 @@ package by.it.academy.MK_JD2_88_2.hw1.service;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.Message;
 import by.it.academy.MK_JD2_88_2.hw1.service.api.IMessageService;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.ChoiceFactoryStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.HibernateMessageStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 
@@ -10,8 +11,7 @@ import java.util.*;
 public class MessageService implements IMessageService {
 
     private static final IMessageService instance = new MessageService();
-    //private final IMessageStorage storage = DBMessageStorage.getInstance();
-    private final IMessageStorage storage = HibernateMessageStorage.getInstance();
+    private final IMessageStorage storage = ChoiceFactoryStorage.getInstance().getMessageStorage();
 
     private MessageService() {
     }

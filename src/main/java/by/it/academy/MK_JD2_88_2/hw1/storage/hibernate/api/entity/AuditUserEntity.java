@@ -114,7 +114,7 @@ public class AuditUserEntity {
         }
 
         public AuditUserEntity build() {
-            return new AuditUserEntity(this.dtCreate, this.text, this.author, this.user);
+            return new AuditUserEntity(this.id, this.dtCreate, this.text, this.author, this.user);
         }
     }
 
