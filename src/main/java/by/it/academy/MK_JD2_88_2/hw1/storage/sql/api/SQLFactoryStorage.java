@@ -6,12 +6,12 @@ import by.it.academy.MK_JD2_88_2.hw1.storage.api.IMessageStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.sql.DBAuditUserStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.sql.DBMessageStorage;
-import by.it.academy.MK_JD2_88_2.hw1.storage.sql.DBUserStorage;
+import by.it.academy.MK_JD2_88_2.hw1.storage.sql.DBUserMessageAuditStorageDecorator;
 
 public class SQLFactoryStorage implements IFactoryStorage {
     @Override
     public IUserStorage getUserStorage() {
-        return DBUserStorage.getInstance();
+        return DBUserMessageAuditStorageDecorator.getInstance();
     }
 
     @Override

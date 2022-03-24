@@ -41,14 +41,7 @@ public class DBUserStorage implements IUserStorage {
             preparedStatement.setDate(4, Date.valueOf(regDate));
             preparedStatement.setDate(5, Date.valueOf(birthday));
             preparedStatement.execute();
-
-            AuditUser audit = AuditUser.Builder.createBuilder()
-                    .setDtCreate(LocalDateTime.now())
-                    .setText("Registration")
-                    .setAuthor(null)
-                    .setUser(user)
-                    .build();
-            this.auditStorage.create(audit);
+            connection.commit();
             preparedStatement.close();
         } catch (SQLException e) {
             System.out.println("Ошибка выполнения SQL " + e.getMessage());

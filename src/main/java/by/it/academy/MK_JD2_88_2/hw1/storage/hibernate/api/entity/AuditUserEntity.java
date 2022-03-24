@@ -2,9 +2,10 @@ package by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-@Table(name = "audit_users")
+@Table(schema = "test", name = "audit_users")
 public class AuditUserEntity {
 
     @Id
@@ -32,13 +33,6 @@ public class AuditUserEntity {
         this.user = user;
     }
 
-    public AuditUserEntity(LocalDateTime dtCreate, String text, UserEntity author, UserEntity user) {
-        this.dtCreate = dtCreate;
-        this.text = text;
-        this.author = author;
-        this.user = user;
-    }
-
     public AuditUserEntity() {
     }
 
@@ -60,6 +54,23 @@ public class AuditUserEntity {
 
     public UserEntity getUser() {
         return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuditUserEntity that = (AuditUserEntity) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(dtCreate, that.dtCreate)
+                && Objects.equals(text, that.text)
+                && Objects.equals(author, that.author)
+                && Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dtCreate, text, author, user);
     }
 
     @Override

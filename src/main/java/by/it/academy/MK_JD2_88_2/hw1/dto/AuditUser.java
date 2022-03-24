@@ -18,13 +18,6 @@ public class AuditUser {
         this.user = user;
     }
 
-    public AuditUser(LocalDateTime dtCreate, String text, User author, User user) {
-        this.dtCreate = dtCreate;
-        this.text = text;
-        this.author = author;
-        this.user = user;
-    }
-
     public Long getId() {
         return id;
     }

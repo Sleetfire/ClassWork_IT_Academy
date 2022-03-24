@@ -1,13 +1,11 @@
 package by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity;
 
-import by.it.academy.MK_JD2_88_2.hw1.dto.User;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "messages")
+@Table(schema = "test", name = "messages")
 public class MessageEntity {
 
     @Id
@@ -30,13 +28,6 @@ public class MessageEntity {
 
     public MessageEntity() {
 
-    }
-
-    public MessageEntity(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime) {
-        this.senderLogin = senderLogin;
-        this.recipientLogin = recipientLogin;
-        this.text = text;
-        this.dateTime = dateTime;
     }
 
     private MessageEntity(Long id, String senderLogin, String recipientLogin, String text, LocalDateTime dateTime, UserEntity user) {
@@ -135,7 +126,6 @@ public class MessageEntity {
         private UserEntity user;
 
         private Builder() {
-
         }
 
         public static Builder createBuilder() {

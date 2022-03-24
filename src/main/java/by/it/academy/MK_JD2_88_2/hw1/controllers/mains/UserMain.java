@@ -1,6 +1,7 @@
 package by.it.academy.MK_JD2_88_2.hw1.controllers.mains;
 
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
+import by.it.academy.MK_JD2_88_2.hw1.storage.api.ChoiceFactoryStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IUserStorage;
 import by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.HibernateAuditUserStorage;
 
@@ -13,9 +14,9 @@ import java.util.List;
 public class UserMain {
     public static void main(String[] args) {
 
-        IUserStorage storage = HibernateUserMessageAuditDecorator.getInstance();
+        IUserStorage storage = ChoiceFactoryStorage.getInstance().getUserStorage();
         User user = User.Builder.createBuilder()
-                .setLogin("login")
+                .setLogin("login1")
                 .setPassword("login")
                 .setName("boris")
                 .setBirthday(LocalDate.now())

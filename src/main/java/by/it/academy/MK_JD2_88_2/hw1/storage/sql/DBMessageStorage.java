@@ -47,13 +47,13 @@ public class DBMessageStorage implements IMessageStorage {
     @Override
     public List<Message> getBySenderLogin(String login) {
         return get("SELECT * FROM app.messages WHERE " +
-                "(sender_login='" + login + "')");
+                "sender_login='" + login + "'");
     }
 
     @Override
     public List<Message> getByRecipientLogin(String login) {
         return get("SELECT * FROM app.messages WHERE " +
-                "(recipient_login='" + login + "')");
+                "recipient_login='" + login + "'");
     }
 
     private List<Message> get(String sql) {
@@ -65,7 +65,7 @@ public class DBMessageStorage implements IMessageStorage {
                 String senderLogin = rs.getString("sender_login");
                 String recipientLogin = rs.getString("recipient_login");
                 String text = rs.getString("text");
-                LocalDateTime dateTime = rs.getTimestamp("date_time").toLocalDateTime();
+                LocalDateTime dateTime = rs.getTimestamp("data_time").toLocalDateTime();
                 Message message = new Message(senderLogin, recipientLogin, text, dateTime);
                 messages.add(message);
             }

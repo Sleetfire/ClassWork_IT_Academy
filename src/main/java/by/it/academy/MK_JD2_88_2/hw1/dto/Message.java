@@ -134,7 +134,6 @@ public class Message {
         private User user;
 
         private Builder() {
-
         }
 
         public static Builder createBuilder() {

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(schema = "test", name = "users")
 public class UserEntity {
 
     @Id
@@ -31,14 +31,6 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<AuditUserEntity> authorAudits = new ArrayList<>();
-
-    public UserEntity(String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.rgDate = rgDate;
-        this.birthday = birthday;
-    }
 
     private UserEntity(Long id, String login, String password, String name, LocalDate rgDate, LocalDate birthday) {
         this.id = id;

@@ -21,4 +21,8 @@
         <listener-class>by.it.academy.MK_JD2_88_2.hw1.controllers.web.listeners.SessionCounterListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>by.it.academy.MK_JD2_88_2.hw1.controllers.web.listeners.DBInitializerListener</listener-class>
+    </listener>
+
 </web-app>

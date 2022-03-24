@@ -3,7 +3,6 @@ package by.it.academy.MK_JD2_88_2.hw1.storage.sql;
 import by.it.academy.MK_JD2_88_2.hw1.dto.AuditUser;
 import by.it.academy.MK_JD2_88_2.hw1.dto.Pageable;
 import by.it.academy.MK_JD2_88_2.hw1.dto.User;
-import by.it.academy.MK_JD2_88_2.hw1.storage.hibernate.api.entity.UserEntity;
 import by.it.academy.MK_JD2_88_2.hw1.storage.sql.api.DBInitializer;
 import by.it.academy.MK_JD2_88_2.hw1.storage.api.IAuditUserStorage;
 

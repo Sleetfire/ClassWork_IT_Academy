@@ -5,7 +5,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
-public class DBInitializer {
+public class DBInitializer implements AutoCloseable{
 
     private volatile static DBInitializer instance;
 
@@ -40,5 +40,10 @@ public class DBInitializer {
             }
         }
         return instance;
+    }
+
+    @Override
+    public void close() throws Exception {
+        cpds.close();
     }
 }
