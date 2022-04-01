@@ -1,0 +1,65 @@
+Hibernate
+
+
+---------------CriteriaBuilder---------------
+
+CriteriaBuilder можно получить из Session или из EntityManager.
+ 
+EntityManager entityManager = this.dbInitializer.getManager(); // получаем EntityManager из инициализатора базы данных
+CriteriaBuilder cb = entityManager.getCriteriaBuilder(); // в данном случаем получаем CriteriaBuilder из объекта EntityManager 
+CriteriaQuery<MessageEntity> query = cb.createQuery(MessageEntity.class); // создаем запрос из объекта CriteriaBuilder 
+Root<MessageEntity> root = query.from(MessageEntity.class); // Root хранит информацию о полях, которая есть в MesssageEntity.
+query.select(root); // передаем query, что мы хотим заселектить поля, которые есть в классе MesssageEntity. Здесь используется
+		       reflection api.
+List<MessageEntity> messageEntities = entityManager.createQuery(query).getResultList(); // передаем собранную query 
+
+---------------Аннотации---------------
+
+Если ставить аннтоции hibernate на поля, тогда будут обрабатываться поля. Если на методы, тогда будет обработка методов.
+Можно ставить аннтации либо на поля, либо на методы (перемешивать нельзя). Если есть необходимость использовать наследование
+и есть желание работать с суперклассами, тогда нужно ставить аннотации на методы. Аннотации, поставленные на поля, нельзя
+переопределить.
+
+---------------Named Query---------------
+
+Указываем аннотацию над классом сущности
+
+@NamedQuery(name = "query_name", query = "from DeptEmployee where employeeNumber = :employeeNo", timeout = 1,
+  fetchSize = 10)
+name = "query_name" - здесь указываем имя именованного запроса
+query = "from DeptEmployee where employeeNumber = :employeeNo" - здесь пишем запрос на hql
+employeeNumber = :employeeNo - через двоеточие указывается параметр, который потом можно будет заменить на реальное значение
+timeout = 1 - время выполнения
+fetchSize = 10 - размер выборки
+
+Применение:
+
+Query<DeptEmployee> query = session.createNamedQuery("DeptEmployee_FindByEmployeeNumber", DeptEmployee.class);
+query.setParameter("employeeNo", "001");
+DeptEmployee result = query.getSingleResult();
+
+Также можно указывать сразу несколько @NamedQuery, помещая их в @NamedQueries({...})
+
+---------------Named Native Query---------------
+
+
+
+Named Native Query отличается от Named Query тем, что здесь используется sql, а не hql.
+
+@NamedNativeQueries(
+    @NamedNativeQuery(name = "DeptEmployee_GetEmployeeByName", 
+      query = "select * from deptemployee emp where name=:name",
+      resultClass = DeptEmployee.class)
+)
+
+Применение: 
+
+Query<DeptEmployee> query = session.createNamedQuery("DeptEmployee_FindByEmployeeName", DeptEmployee.class);
+query.setParameter("name", "John Wayne");
+DeptEmployee result = query.getSingleResult();
+
+или 
+
+NativeQuery query = session.getNamedNativeQuery("DeptEmployee_FindByEmployeeName");
+query.setParameter("name", "John Wayne");
+DeptEmployee result = (DeptEmployee) query.getSingleResult();
