@@ -46,13 +46,19 @@ Bean - какой-то объект, созданный спрингом.
 method - сюда указываем метод.
 @SessionAttribute(name = "user", required = false) - используем в параметрах метода для указания откуда брать данный параметр.
 name - указывает на название параметра, required - обязательный параметр или нет.
-@Qualifier("bean_name") - указывает, какой конкретно бин нужно вызвать
 
+@Qualifier("bean_name") - указывает, какой конкретно бин нужно вызвать
+@Primary - указывает на бин, который будет внедрен по умолчанию
+
+@Transactional - указывает на использование транзакций. Может принимать параметры (readOnly = true), это означает,
+что в транзакции доступно только чтение.
+
+@Modifying - указывает, что запрос не для SELECT, а для INSERT, UPDATE, DELETE
 -------------------------------------------------------------------------------------------------------------------------------
 
 applicationContext.xml
 
-Создание бина из класса
+Создание бина из класса через конструктор
 
 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
@@ -60,6 +66,12 @@ applicationContext.xml
 
 В <constructor-arg> указываем имя принимаемого бина (name), откуда брать (ref). Если нужно ввести значение,
 тогда используется параметр value. 
+
+Тогда можно передавать параметры в бин через сеттер:
+
+<bean id="game" class="org.example.dto.Game">
+        <property name="genre" ref="genre"></constructor-arg>
+    </bean>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
@@ -82,4 +94,35 @@ applicationContext.xml
 В applicationContext.xml мы прописываем путь для бинов, которые используются для сервисов и репозиториев,
 а в mvc-servlet.xml - для бинов контроллеров
 
-	
+Если нам необходимо будет работать с файлами .properties (брать из них значения для placeholder'ов), тогда в файле
+с конфигурациями необходимо прописать следующее:
+
+<context:property-placeholder location="classpath:/database.properties"/> - здесь location="classpath:/database.properties"
+является расположением файла .properties.
+Чтобы использовать параметры из файла пропертис:  value="${jdbc.username}
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Если необходимо передать список из бинов, тогда делаем таким образом:
+
+    <bean id="musicBean1"
+          class="ru.alishev.springcourse.ClassicalMusic">
+    </bean>
+
+    <bean id="musicBean2"
+          class="ru.alishev.springcourse.RockMusic">
+    </bean>
+
+    <bean id="musicBean3"
+          class="ru.alishev.springcourse.RapMusic">
+    </bean>
+
+    <bean id="musicPlayer"
+          class="ru.alishev.springcourse.MusicPlayer">
+        <property name="musicList">
+            <list>
+                <ref bean="musicBean1"/>
+                <ref bean="musicBean2"/>
+                <ref bean="musicBean3"/>
+            </list>
+        </property>
